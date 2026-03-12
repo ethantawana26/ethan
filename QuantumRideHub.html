@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>QuantumRide Hub — Zimbabwe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════════════════
+   QUANTUMRIDE HUB — Zimbabwe Edition v5.158.0
+   Aesthetic: Warm Slate + Electric Amber
+   inDrive meets Tesla Energy
+════════════════════════════════════════════ */
+*,::before,::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#111827;--ink2:#374151;--ink3:#6b7280;--ink4:#9ca3af;
+  --wash:#f9fafb;--wash2:#ffffff;--wash3:#f3f4f6;
+  --rim:#e5e7eb;--rim2:#d1d5db;
+  --amber:#f59e0b;--amber2:#d97706;--amber3:#fef3c7;
+  --green:#22c55e;--green2:#16a34a;--green3:#dcfce7;
+  --red:#ef4444;--blue:#3b82f6;--cyan:#06b6d4;
+  --glow-a:0 0 24px rgba(245,158,11,.35);
+  --sh:0 1px 3px rgba(0,0,0,.07),0 4px 14px rgba(0,0,0,.05);
+  --sh2:0 8px 36px rgba(0,0,0,.14);
+  --r:12px;--r2:20px;
+  --W:390px;--H:848px;
+}
+html,body{
+  height:100%;background:#1c1917;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Nunito',sans-serif;overflow:hidden;
+}
+
+/* ─── PHONE SHELL ─── */
+.phone{
+  width:var(--W);height:var(--H);
+  background:var(--wash);border-radius:48px;
+  overflow:hidden;position:relative;
+  display:flex;flex-direction:column;
+  box-shadow:0 50px 130px rgba(0,0,0,.95),
+             0 0 0 1.5px rgba(255,255,255,.07),
+             inset 0 0 0 1px rgba(255,255,255,.04);
+}
+@media(max-width:410px){.phone{width:100vw;height:100dvh;border-radius:0}}
+
+/* ─── STATUS BAR ─── */
+.sbar{
+  position:absolute;top:0;left:0;right:0;z-index:300;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:13px 22px 0;pointer-events:none;
+}
+.sbar-l{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--ink)}
+.sbar-r{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink3)}
+.sbar.inv .sbar-l,.sbar.inv .sbar-r{color:#fff}
+
+/* ─── SCREENS CONTAINER ─── */
+.screens{flex:1;position:relative;overflow:hidden}
+.screen{
+  position:absolute;inset:0;
+  display:none;flex-direction:column;
+  background:var(--wash);overflow:hidden;
+}
+.screen.active{display:flex;animation:pageIn .28s cubic-bezier(.4,0,.2,1)}
+.sc-scroll{flex:1;overflow-y:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.sc-scroll::-webkit-scrollbar{display:none}
+
+/* ─── PAGE HEADER ─── */
+.ph{
+  display:flex;align-items:center;gap:10px;
+  padding:54px 16px 14px;flex-shrink:0;
+  background:var(--wash2);border-bottom:1px solid var(--rim);
+}
+.ph.dark{background:var(--ink);border-color:#374151}
+.ph.amber-grad{background:linear-gradient(135deg,var(--amber2),var(--amber));border:none}
+.ph-back{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--wash);border:1.5px solid var(--rim);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;flex-shrink:0;
+  transition:all .2s;color:var(--ink);
+}
+.ph-back:hover{border-color:var(--amber);background:var(--amber3)}
+.ph-back.inv{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff}
+.ph-title{
+  font-family:'Syne',sans-serif;font-size:20px;font-weight:700;
+  color:var(--ink);flex:1;
+}
+.ph-title.inv{color:#fff}
+.ph-action{background:none;border:none;color:var(--amber);font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif}
+.ph-badge{
+  background:var(--amber);color:var(--ink);
+  border-radius:20px;padding:4px 10px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+}
+
+/* ─── BOTTOM NAV ─── */
+.bnav{
+  display:flex;background:var(--wash2);
+  border-top:1px solid var(--rim);
+  padding:8px 0 20px;flex-shrink:0;
+}
+.bn{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:none;border:none;cursor:pointer;padding:7px 4px;
+  position:relative;
+}
+.bn-icon{font-size:21px;transition:transform .2s}
+.bn-label{
+  font-size:9px;font-weight:800;letter-spacing:.8px;
+  color:var(--ink4);text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace;
+}
+.bn.on .bn-label{color:var(--amber)}
+.bn.on .bn-icon{transform:scale(1.12);filter:drop-shadow(0 0 6px var(--amber))}
+.bn-dot{
+  position:absolute;top:2px;right:calc(50% - 18px);
+  width:7px;height:7px;background:var(--red);border-radius:50%;
+  border:2px solid var(--wash2);
+}
+
+/* ════════════════════════
+   SPLASH
+════════════════════════ */
+#pg-splash{
+  background:var(--ink);
+  justify-content:center;align-items:center;
+}
+#pg-splash::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 60%,rgba(245,158,11,.12) 0%,transparent 65%);
+}
+.sp-wrap{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.sp-bolt{font-size:70px;animation:float 3.5s ease-in-out infinite;filter:drop-shadow(0 0 28px var(--amber))}
+.sp-logo{
+  font-family:'Syne',sans-serif;font-size:42px;font-weight:800;
+  color:#fff;letter-spacing:1px;line-height:1.1;
+}
+.sp-logo span{color:var(--amber)}
+.sp-sub{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:#4b5563;letter-spacing:5px;text-transform:uppercase;
+}
+.sp-region{font-size:13px;color:#6b7280;font-weight:600;margin-top:3px}
+.sp-loader{width:200px;margin-top:8px}
+.sp-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.sp-fill{height:100%;width:0;background:var(--amber);border-radius:2px;box-shadow:0 0 10px var(--amber)}
+.sp-pct{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--amber);text-align:right;margin-top:5px;
+}
+.sp-btn{
+  margin-top:14px;padding:14px 52px;background:var(--amber);
+  color:var(--ink);border:none;border-radius:50px;
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:800;
+  cursor:pointer;letter-spacing:1.5px;display:none;
+  box-shadow:0 10px 36px rgba(245,158,11,.5);
+  transition:transform .2s,box-shadow .2s;animation:fadeUp .5s ease;
+}
+.sp-btn:hover{transform:scale(1.05);box-shadow:0 14px 44px rgba(245,158,11,.7)}
+.sp-version{position:absolute;bottom:20px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#374151}
+
+/* ════════════════════════
+   HOME (MAP)
+════════════════════════ */
+#pg-home{background:var(--wash)}
+
+/* Top overlay on map */
+.map-topbar{
+  position:absolute;top:0;left:0;right:0;z-index:60;
+  padding:52px 14px 10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.96) 60%,transparent);
+  backdrop-filter:blur(14px);
+}
+.mtb-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.mtb-logo{display:flex;align-items:center;gap:8px}
+.mtb-bolt{font-size:24px;filter:drop-shadow(0 0 8px var(--amber))}
+.mtb-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--ink)}
+.mtb-zim{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  color:var(--ink4);letter-spacing:3px;
+}
+.mtb-notif-btn{
+  position:relative;background:var(--wash);border:1.5px solid var(--rim);
+  border-radius:50%;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;cursor:pointer;box-shadow:var(--sh);transition:all .2s;
+}
+.mtb-notif-btn:hover{border-color:var(--amber)}
+.nb-cnt{
+  position:absolute;top:-3px;right:-3px;
+  background:var(--red);color:#fff;border-radius:50%;
+  width:16px;height:16px;font-size:9px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--wash);
+}
+
+/* Tagline */
+.tagline-bar{
+  overflow:hidden;border-radius:8px;
+  background:linear-gradient(90deg,var(--amber2),var(--amber),#f97316,var(--amber2));
+  background-size:400% 100%;animation:gradflow 5s linear infinite;
+  padding:5px 12px;margin-bottom:8px;
+}
+.tgl-txt{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--ink);font-weight:700;letter-spacing:2.5px;
+  transition:opacity .4s;white-space:nowrap;
+}
+
+/* Map switch */
+.mswitch{
+  display:flex;background:var(--ink);border-radius:8px;overflow:hidden;
+}
+.msw-btn{
+  flex:1;padding:7px;background:transparent;border:none;
+  color:#6b7280;font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.8px;
+}
+.msw-btn.on{background:var(--amber);color:var(--ink)}
+
+/* Map canvas area */
+.map-stage{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  overflow:hidden;
+}
+.map-view{position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none}
+.map-view.on{opacity:1;pointer-events:all}
+#gmap-frame{width:100%;height:100%;border:none}
+#mbx-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+/* Car markers */
+.car-layer{position:absolute;inset:0;z-index:20;pointer-events:none}
+.car-mk{
+  position:absolute;transform:translate(-50%,-50%);
+  font-size:20px;cursor:pointer;pointer-events:all;
+  filter:drop-shadow(0 3px 8px rgba(0,0,0,.4));
+  transition:left 2.5s cubic-bezier(.4,0,.2,1),top 2.5s cubic-bezier(.4,0,.2,1);
+}
+.car-mk:hover .ck-tip{opacity:1;transform:translateX(-50%) translateY(0)}
+.ck-tip{
+  position:absolute;bottom:-24px;left:50%;
+  transform:translateX(-50%) translateY(4px);
+  background:rgba(17,24,39,.92);color:var(--amber);
+  border:1px solid var(--amber);border-radius:6px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  padding:3px 8px;white-space:nowrap;opacity:0;
+  transition:all .2s;pointer-events:none;
+}
+
+/* User pin */
+.user-pin{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);z-index:25;
+  pointer-events:none;
+}
+.up-r{
+  position:absolute;border-radius:50%;
+  border:2px solid var(--amber);
+  top:-10px;left:-10px;width:36px;height:36px;
+  animation:ripple 2.2s ease-out infinite;
+}
+.up-r:nth-child(2){animation-delay:.7s}
+.up-c{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--amber);box-shadow:0 0 16px var(--amber);
+  position:relative;z-index:1;
+}
+
+/* Map controls */
+.map-ctrls{
+  position:absolute;right:12px;top:50%;
+  transform:translateY(-50%);z-index:40;
+  display:flex;flex-direction:column;gap:6px;
+}
+.mc-btn{
+  width:36px;height:36px;background:rgba(255,255,255,.92);
+  border:1px solid var(--rim);border-radius:9px;
+  font-size:17px;font-weight:700;color:var(--ink);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--sh);transition:all .2s;
+}
+.mc-btn:hover{border-color:var(--amber);color:var(--amber)}
+
+/* Map link pills */
+.map-pills{
+  position:absolute;bottom:12px;left:10px;right:60px;
+  z-index:40;display:flex;gap:6px;
+}
+.mp{
+  display:flex;align-items:center;gap:4px;
+  padding:6px 10px;
+  background:rgba(255,255,255,.9);
+  border:1px solid var(--rim);border-radius:20px;
+  font-size:10px;font-weight:800;color:var(--ink2);
+  text-decoration:none;backdrop-filter:blur(8px);
+  transition:all .2s;white-space:nowrap;
+}
+.mp:hover{border-color:var(--amber);color:var(--amber2)}
+
+/* Ride type tabs */
+.ride-tabs{
+  display:flex;background:var(--wash2);
+  border-bottom:1px solid var(--rim);
+  flex-shrink:0;position:relative;z-index:30;
+}
+.rt{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:8px 2px;background:none;border:none;cursor:pointer;
+  transition:all .2s;border-bottom:3px solid transparent;
+}
+.rt-i{font-size:18px}
+.rt-l{font-size:9px;font-weight:800;color:var(--ink4);letter-spacing:.5px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.rt.on{border-bottom-color:var(--amber)}
+.rt.on .rt-l{color:var(--amber2)}
+
+/* Bottom sheet */
+.bsheet{
+  background:var(--wash2);border-radius:24px 24px 0 0;
+  padding:0 14px 14px;box-shadow:0 -6px 24px rgba(0,0,0,.07);
+  flex-shrink:0;position:relative;z-index:30;
+}
+.bsh-bar{width:40px;height:4px;background:var(--rim);border-radius:2px;margin:10px auto 12px}
+.bs-pane{display:none}
+.bs-pane.on{display:block}
+.bs-title{
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:700;
+  color:var(--ink);margin-bottom:10px;
+}
+.bs-row{
+  display:flex;align-items:center;gap:9px;
+  background:var(--wash3);border:1.5px solid var(--rim);
+  border-radius:10px;padding:11px 12px;cursor:pointer;
+  margin-bottom:7px;transition:border-color .2s;
+}
+.bs-row:hover{border-color:var(--amber)}
+.bs-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.bs-g{background:var(--green);box-shadow:0 0 6px var(--green)}
+.bs-r{background:var(--red);box-shadow:0 0 6px var(--red)}
+.bs-txt{font-size:13px;font-weight:700;color:var(--ink)}
+.bs-ph{color:var(--ink4)}
+.bs-chips{display:flex;gap:7px;margin-bottom:10px}
+.bs-chip{
+  flex:1;display:flex;align-items:center;gap:4px;
+  padding:8px 6px;background:var(--wash3);
+  border:1.5px solid var(--rim);border-radius:8px;
+  font-size:11px;font-weight:700;cursor:pointer;
+  transition:all .2s;color:var(--ink2);
+}
+.bs-chip:hover{border-color:var(--amber);background:var(--amber3);color:var(--amber2)}
+.bs-near{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--ink3);font-weight:700;
+  border-top:1px solid var(--rim);padding-top:9px;margin-top:6px;
+}
+.near-pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blinker 1.4s infinite}
+.bs-input{
+  width:100%;background:var(--wash3);border:1.5px solid var(--rim);
+  border-radius:10px;padding:10px 12px;font-family:'Nunito',sans-serif;
+  font-size:13px;color:var(--ink);outline:none;margin-bottom:8px;transition:border-color .2s;
+}
+.bs-input:focus{border-color:var(--amber)}
+.bs-select{
+  flex:1;background:var(--wash3);border:1.5px solid var(--rim);
+  border-radius:10px;padding:10px 12px;font-size:13px;color:var(--ink);outline:none;
+}
+.cta{
+  display:block;width:100%;padding:15px;
+  background:var(--amber);color:var(--ink);border:none;
+  border-radius:12px;font-family:'Syne',sans-serif;
+  font-size:17px;font-weight:800;cursor:pointer;letter-spacing:.8px;
+  transition:all .2s;text-align:center;
+}
+.cta:hover{background:var(--amber2);box-shadow:0 8px 28px rgba(245,158,11,.45)}
+.cta.outline{background:transparent;border:1.5px solid var(--rim);color:var(--ink2);font-size:14px}
+.cta.outline:hover{border-color:var(--red);color:var(--red);box-shadow:none}
+.cta.green-cta{background:var(--green);box-shadow:0 8px 28px rgba(34,197,94,.35)}
+.cta.green-cta:hover{background:var(--green2)}
+
+/* ════════════════════════
+   BOOKING STEPS
+════════════════════════ */
+.step-dots{
+  display:flex;gap:5px;
+  padding:10px 14px;background:var(--wash2);
+  border-bottom:1px solid var(--rim);flex-shrink:0;
+}
+.sd{flex:1;height:3px;border-radius:2px;background:var(--rim);transition:background .3s}
+.sd.done{background:var(--amber);box-shadow:0 0 6px rgba(245,158,11,.5)}
+.sd.active{background:linear-gradient(90deg,var(--amber),#f97316)}
+
+/* Mini map preview */
+.bk-mini-map{
+  height:130px;overflow:hidden;flex-shrink:0;position:relative;
+  background:#e0f0d8;
+}
+.bk-mini-map canvas{position:absolute;inset:0;width:100%;height:100%}
+
+/* Form strip */
+.bk-form{
+  background:var(--wash2);border-bottom:1px solid var(--rim);flex-shrink:0;
+}
+.bk-row{
+  display:flex;align-items:center;gap:9px;padding:11px 14px;
+}
+.bk-row+.bk-row{border-top:1px solid var(--rim)}
+.bk-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.bk-g{background:var(--green)}
+.bk-r{background:var(--red)}
+.bk-inp{
+  flex:1;background:none;border:none;outline:none;
+  font-family:'Nunito',sans-serif;font-size:14px;
+  font-weight:700;color:var(--ink);
+}
+.bk-inp::placeholder{color:var(--ink4);font-weight:600}
+.bk-gps{background:none;border:none;font-size:17px;cursor:pointer;padding:3px}
+
+/* Suggestions */
+.sugg-box{
+  background:var(--wash2);border:1px solid var(--rim);
+  border-radius:10px;margin:4px 14px;
+  overflow:hidden;display:none;box-shadow:var(--sh);
+}
+.sugg-box.open{display:block}
+.sugg-it{
+  display:flex;align-items:center;gap:9px;padding:10px 12px;
+  border-bottom:1px solid var(--rim);font-size:13px;color:var(--ink2);
+  cursor:pointer;font-weight:600;transition:background .15s;
+}
+.sugg-it:last-child{border:none}
+.sugg-it:hover{background:var(--amber3);color:var(--amber2)}
+
+/* Scrollable page body */
+.page-body{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:16px}
+.page-body::-webkit-scrollbar{display:none}
+.section-lbl{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:3px;color:var(--ink4);
+  padding:14px 14px 8px;
+}
+
+/* ── Saved places ── */
+.place-row{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;background:var(--wash2);
+  border-bottom:1px solid var(--rim);cursor:pointer;transition:background .15s;
+}
+.place-row:hover{background:var(--amber3)}
+.pr-ico{font-size:22px;flex-shrink:0}
+.pr-lbl{font-size:13px;font-weight:700;color:var(--ink);flex:1}
+.pr-sub{font-size:11px;color:var(--ink3)}
+
+/* ── Trip info strip ── */
+.trip-strip{
+  display:flex;background:var(--wash2);
+  border-top:1px solid var(--rim);border-bottom:1px solid var(--rim);
+  margin-bottom:14px;
+}
+.ts-cell{flex:1;text-align:center;padding:12px 4px;border-right:1px solid var(--rim)}
+.ts-cell:last-child{border:none}
+.ts-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--amber2)}
+.ts-lbl{font-size:9px;color:var(--ink4);letter-spacing:1.5px;margin-top:3px}
+
+/* ── Vehicle grid ── */
+.veh-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 14px}
+.vc{
+  background:var(--wash3);border:2px solid var(--rim);
+  border-radius:12px;padding:12px 9px;text-align:center;
+  cursor:pointer;transition:all .2s;
+}
+.vc:hover{border-color:var(--amber);background:var(--amber3)}
+.vc.on{border-color:var(--amber);background:var(--amber3);box-shadow:0 0 0 3px rgba(245,158,11,.18)}
+.vc-icon{font-size:26px;margin-bottom:4px}
+.vc-name{font-size:12px;font-weight:800;color:var(--ink)}
+.vc-rate{font-size:11px;color:var(--green2);font-family:'JetBrains Mono',monospace;margin-top:3px}
+.vc-eta{font-size:10px;color:var(--ink4)}
+
+/* ── Fare ── */
+.fare-wrap{padding:0 14px 10px}
+.fare-center{text-align:center;padding:8px 0 4px}
+.fare-big{
+  font-family:'Syne',sans-serif;font-size:58px;font-weight:800;
+  color:var(--amber);line-height:1;
+}
+.fare-unit{font-size:13px;color:var(--ink3);font-family:'JetBrains Mono',monospace;letter-spacing:2px}
+.fare-adj{display:flex;align-items:center;justify-content:center;gap:14px;margin:8px 0 10px}
+.fa-btn{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--wash3);border:2px solid var(--rim);
+  font-size:22px;font-weight:900;cursor:pointer;color:var(--ink);
+  transition:all .2s;
+}
+.fa-btn:hover{border-color:var(--amber);background:var(--amber3)}
+.fare-slider{
+  width:100%;-webkit-appearance:none;height:5px;
+  background:var(--rim);border-radius:3px;outline:none;margin:6px 0 4px;
+}
+.fare-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:24px;height:24px;border-radius:50%;
+  background:var(--amber);cursor:pointer;
+  box-shadow:0 0 10px rgba(245,158,11,.5);border:2.5px solid var(--wash2);
+}
+.fare-range{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink4);margin-bottom:12px}
+.tip-box{
+  display:flex;gap:9px;background:rgba(245,158,11,.07);
+  border:1px solid rgba(245,158,11,.25);border-radius:10px;
+  padding:11px 12px;font-size:12px;color:var(--ink2);
+  line-height:1.65;margin-bottom:14px;
+}
+.tip-icon{font-size:18px;flex-shrink:0}
+.tip-box b{color:var(--amber2)}
+
+/* ════════════════════════
+   SEARCHING / RADAR
+════════════════════════ */
+#pg-search{background:var(--ink);justify-content:center;align-items:center;text-align:center}
+.radar-wrap{position:relative;width:172px;height:172px;margin-bottom:18px}
+.r-ring{
+  position:absolute;border-radius:50%;border:1.5px solid rgba(245,158,11,.2);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.rr1{width:52px;height:52px}
+.rr2{width:108px;height:108px;animation:rpulse 2.5s ease-out infinite}
+.rr3{width:165px;height:165px;animation:rpulse 2.5s ease-out .55s infinite}
+.r-sweep{
+  position:absolute;top:50%;left:50%;
+  width:50%;height:1.5px;
+  background:linear-gradient(90deg,rgba(245,158,11,.9),transparent);
+  transform-origin:left center;animation:rsweep 3s linear infinite;
+}
+.r-core{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:42px;height:42px;border-radius:50%;
+  background:var(--amber);display:flex;align-items:center;justify-content:center;
+  font-size:19px;box-shadow:0 0 24px var(--amber);color:var(--ink);
+}
+.srch-title{
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:6px;
+}
+.srch-offer{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:#4b5563;letter-spacing:2.5px;margin-bottom:10px;
+}
+.srch-status{font-size:13px;color:var(--amber);margin-bottom:6px;font-weight:700}
+.srch-timer{
+  font-family:'JetBrains Mono',monospace;font-size:46px;font-weight:700;color:#fff;
+  margin-bottom:20px;
+}
+/* Offers cards */
+.offer-card{
+  background:#1f2937;border:1.5px solid #374151;border-radius:12px;
+  padding:11px 12px;display:flex;align-items:center;gap:10px;
+  margin:0 16px 8px;animation:slideUp .3s ease;text-align:left;
+}
+.oc-avatar{font-size:28px}
+.oc-info{flex:1}
+.oc-name{font-size:13px;font-weight:700;color:#fff}
+.oc-veh{font-size:11px;color:#6b7280}
+.oc-eta{font-size:10px;color:var(--green);font-family:'JetBrains Mono',monospace;margin-top:2px}
+.oc-fare{
+  font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--amber);
+}
+.oc-accept{
+  background:var(--amber);color:var(--ink);border:none;
+  border-radius:8px;padding:8px 12px;font-weight:800;font-size:12px;cursor:pointer;
+  transition:all .2s;
+}
+.oc-accept:hover{background:var(--amber2)}
+.srch-cancel{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  color:#6b7280;padding:11px 28px;border-radius:9px;
+  font-family:'Nunito',sans-serif;font-size:13px;cursor:pointer;
+}
+
+/* ════════════════════════
+   DRIVER APPROACHING
+════════════════════════ */
+#pg-riding{background:var(--wash)}
+.ride-map{flex:1;position:relative;overflow:hidden;background:#e8f5e9}
+.ride-map canvas{position:absolute;inset:0;width:100%;height:100%}
+.ride-overlay{
+  position:absolute;bottom:0;left:0;right:0;padding:12px;
+}
+.ride-card{
+  background:var(--wash2);border-radius:20px 20px 16px 16px;
+  padding:14px;box-shadow:var(--sh2);
+}
+.rc-drv-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rc-avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--amber3);border:2.5px solid var(--amber);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;flex-shrink:0;
+}
+.rc-info{flex:1}
+.rc-name{font-size:16px;font-weight:800;color:var(--ink)}
+.rc-veh{font-size:11px;color:var(--ink3)}
+.rc-stars{color:var(--amber);font-size:12px}
+.rc-eta-badge{
+  background:var(--amber3);border:1.5px solid var(--amber);
+  border-radius:9px;padding:7px 12px;text-align:center;flex-shrink:0;
+}
+.rc-eta-n{
+  font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--amber2);line-height:1;
+}
+.rc-eta-l{font-size:9px;color:var(--ink4);letter-spacing:2px}
+.rc-progress{height:5px;background:var(--rim);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.rc-prog-fill{height:100%;background:var(--amber);border-radius:3px;width:5%;transition:width 1.2s ease;box-shadow:0 0 8px var(--amber)}
+.rc-route{
+  display:flex;align-items:center;gap:7px;font-size:12px;
+  color:var(--ink3);font-weight:700;margin-bottom:10px;
+}
+.rc-actions{display:flex;gap:8px}
+.rca-call{
+  flex:1;background:var(--amber);color:var(--ink);border:none;
+  border-radius:10px;padding:12px;font-family:'Nunito',sans-serif;
+  font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;
+}
+.rca-call:hover{background:var(--amber2)}
+.rca-cancel{
+  flex:1;background:var(--wash3);border:1.5px solid var(--rim);
+  border-radius:10px;padding:12px;font-family:'Nunito',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;color:var(--ink2);transition:all .2s;
+}
+.rca-cancel:hover{border-color:var(--red);color:var(--red)}
+
+/* ════════════════════════
+   CALL MODAL
+════════════════════════ */
+.call-modal{
+  position:fixed;inset:0;z-index:999;
+  background:rgba(0,0,0,.88);backdrop-filter:blur(14px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.call-modal.on{opacity:1;pointer-events:all}
+.call-box{
+  background:#111827;border-radius:28px 28px 0 0;padding:30px 24px 38px;
+  width:100%;max-width:var(--W);text-align:center;
+  transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.call-modal.on .call-box{transform:translateY(0)}
+.call-av{
+  width:82px;height:82px;border-radius:50%;
+  background:var(--amber3);border:3px solid var(--amber);
+  display:flex;align-items:center;justify-content:center;
+  font-size:42px;margin:0 auto 14px;
+  animation:call-glow 1s ease infinite;
+}
+.call-name{font-family:'Syne',sans-serif;font-size:27px;font-weight:800;color:#fff}
+.call-sub{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:#6b7280;letter-spacing:2.5px;margin-top:4px;margin-bottom:26px;
+}
+.call-btns{display:flex;justify-content:space-around}
+.c-end{
+  width:66px;height:66px;border-radius:50%;background:var(--red);
+  border:none;font-size:28px;cursor:pointer;
+  box-shadow:0 8px 24px rgba(239,68,68,.5);transition:transform .2s;
+}
+.c-ans{
+  width:66px;height:66px;border-radius:50%;background:var(--green);
+  border:none;font-size:28px;cursor:pointer;
+  box-shadow:0 8px 24px rgba(34,197,94,.5);transition:transform .2s;
+}
+.c-end:hover,.c-ans:hover{transform:scale(1.1)}
+.c-lbl{font-size:10px;color:#6b7280;margin-top:7px;font-family:'JetBrains Mono',monospace}
+
+/* ════════════════════════
+   NOTIFICATIONS
+════════════════════════ */
+.notif-it{
+  display:flex;gap:11px;padding:13px 14px;
+  background:var(--wash2);border-bottom:1px solid var(--rim);
+  cursor:pointer;transition:background .15s;
+}
+.notif-it.unread{background:#fffbeb;border-left:3.5px solid var(--amber)}
+.ni-ico{font-size:24px;flex-shrink:0}
+.ni-b{flex:1}
+.ni-title{font-size:13px;font-weight:800;color:var(--ink)}
+.ni-msg{font-size:11px;color:var(--ink3);margin-top:2px;line-height:1.5}
+.ni-time{font-size:10px;color:var(--ink4);font-family:'JetBrains Mono',monospace;margin-top:3px}
+
+/* ════════════════════════
+   SAFETY
+════════════════════════ */
+.safety-hero{
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  padding:28px 14px;text-align:center;
+}
+.sh-icon{font-size:54px;margin-bottom:8px}
+.sh-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff}
+.sh-sub{font-size:12px;color:#64748b;margin-top:3px}
+.sf-row{
+  display:flex;align-items:center;gap:12px;padding:13px 14px;
+  background:var(--wash2);border-bottom:1px solid var(--rim);cursor:pointer;
+  transition:background .15s;
+}
+.sf-row:hover{background:var(--wash3)}
+.sf-ico{font-size:22px;flex-shrink:0;width:28px;text-align:center}
+.sf-info{flex:1}
+.sf-name{font-size:13px;font-weight:800;color:var(--ink)}
+.sf-desc{font-size:11px;color:var(--ink3);margin-top:2px}
+.toggl{
+  width:48px;height:28px;background:var(--rim);border-radius:14px;
+  cursor:pointer;position:relative;transition:background .3s;flex-shrink:0;
+}
+.toggl.on{background:var(--green)}
+.toggl-th{
+  width:22px;height:22px;background:#fff;border-radius:50%;
+  position:absolute;top:3px;left:3px;transition:left .3s;
+  box-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+.toggl.on .toggl-th{left:23px}
+
+/* ════════════════════════
+   SETTINGS
+════════════════════════ */
+.sg{margin-bottom:4px}
+.sg-lbl{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:3px;color:var(--ink4);padding:14px 14px 8px;
+}
+.s-row{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 14px;background:var(--wash2);border-bottom:1px solid var(--rim);
+  cursor:pointer;transition:background .15s;
+}
+.s-row:hover{background:var(--wash3)}
+.s-ico{font-size:20px;width:26px;text-align:center;flex-shrink:0}
+.s-inf{flex:1}
+.s-nm{font-size:14px;font-weight:700;color:var(--ink)}
+.s-vl{font-size:11px;color:var(--ink3);font-family:'JetBrains Mono',monospace;margin-top:2px}
+.s-arr{color:var(--ink4);font-size:18px}
+.s-row.danger:hover{background:#fff5f5}
+.s-row.danger .s-nm{color:var(--red)}
+.ver-card{
+  margin:18px 14px;background:var(--ink);border-radius:18px;padding:20px;text-align:center;
+}
+.ver-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--amber);margin-bottom:5px}
+.ver-n{font-family:'JetBrains Mono',monospace;font-size:14px;color:#94a3b8}
+.ver-b{font-family:'JetBrains Mono',monospace;font-size:10px;color:#374151;margin-top:3px}
+
+/* ════════════════════════
+   LANGUAGE
+════════════════════════ */
+.ls-wrap{padding:12px 14px;background:var(--wash2);border-bottom:1px solid var(--rim)}
+.ls-inp{
+  width:100%;background:var(--wash3);border:1.5px solid var(--rim);
+  border-radius:10px;padding:9px 12px;font-family:'Nunito',sans-serif;
+  font-size:13px;color:var(--ink);outline:none;
+}
+.ls-inp:focus{border-color:var(--amber)}
+.lang-row{
+  display:flex;align-items:center;gap:10px;padding:12px 14px;
+  background:var(--wash2);border-bottom:1px solid var(--rim);cursor:pointer;transition:background .15s;
+}
+.lang-row:hover,.lang-row.sel{background:var(--amber3)}
+.lr-flag{font-size:21px}
+.lr-nat{font-size:14px;font-weight:800;color:var(--ink)}
+.lr-en{font-size:11px;color:var(--ink3)}
+.lr-chk{color:var(--amber2);font-size:16px;margin-left:auto;font-weight:800}
+
+/* ════════════════════════
+   UNITS
+════════════════════════ */
+.unit-desc{padding:14px;font-size:13px;color:var(--ink2);background:var(--wash2);border-bottom:1px solid var(--rim)}
+.unit-opt{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px;background:var(--wash2);border-bottom:1px solid var(--rim);cursor:pointer;
+}
+.unit-opt:hover,.unit-opt.sel{background:var(--amber3)}
+.uo-lbl{font-size:14px;font-weight:800;color:var(--ink)}
+.uo-desc{font-size:11px;color:var(--ink3);margin-top:2px}
+.uo-radio{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--rim);flex-shrink:0;position:relative;
+}
+.uo-radio.sel{border-color:var(--amber);background:var(--amber)}
+.uo-radio.sel::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.unit-preview{margin:14px;background:var(--ink);border-radius:12px;padding:14px}
+.up-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:#64748b;letter-spacing:3px;margin-bottom:7px}
+.up-ex{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber)}
+
+/* ════════════════════════
+   APPEARANCE
+════════════════════════ */
+.ap-opt{
+  display:flex;align-items:center;gap:12px;padding:13px;
+  background:var(--wash2);border:2px solid var(--rim);border-radius:12px;cursor:pointer;transition:all .2s;
+  margin:0 14px 9px;
+}
+.ap-opt.sel{border-color:var(--amber)}
+.ap-preview{
+  width:54px;height:40px;border-radius:8px;border:1px solid var(--rim);overflow:hidden;flex-shrink:0;display:flex;
+}
+.ap-half-l{flex:1;background:#f5f7fa}
+.ap-half-d{flex:1;background:#111827}
+.ap-lbl{flex:1;font-size:14px;font-weight:800;color:var(--ink)}
+.ap-radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--rim);flex-shrink:0;position:relative}
+.ap-radio.sel{border-color:var(--amber);background:var(--amber)}
+.ap-radio.sel::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+
+/* ════════════════════════
+   LEGAL
+════════════════════════ */
+.legal-it{
+  display:flex;align-items:center;gap:12px;padding:14px;
+  background:var(--wash2);border-bottom:1px solid var(--rim);cursor:pointer;transition:background .15s;
+}
+.legal-it:hover{background:var(--amber3)}
+.li-nm{font-size:14px;font-weight:800;color:var(--ink)}
+.li-dt{font-size:11px;color:var(--ink3);margin-top:2px}
+
+/* ════════════════════════
+   HELP
+════════════════════════ */
+.help-cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px}
+.hcat{
+  background:var(--wash2);border:1.5px solid var(--rim);border-radius:12px;
+  padding:14px;font-size:13px;font-weight:800;color:var(--ink);
+  cursor:pointer;transition:all .2s;text-align:center;
+}
+.hcat:hover{border-color:var(--amber);background:var(--amber3);color:var(--amber2)}
+.faq-it{background:var(--wash2);border-bottom:1px solid var(--rim);overflow:hidden}
+.faq-q{
+  padding:13px 14px;font-size:13px;font-weight:800;color:var(--ink);
+  cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+}
+.faq-a{
+  padding:0 14px;font-size:12px;color:var(--ink2);line-height:1.65;
+  max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;
+}
+.faq-it.open .faq-a{max-height:200px;padding:0 14px 13px}
+
+/* ════════════════════════
+   SUPPORT CHAT
+════════════════════════ */
+.chat-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;scrollbar-width:none}
+.chat-body::-webkit-scrollbar{display:none}
+.cm{display:flex;flex-direction:column;max-width:80%}
+.cm.bot{align-self:flex-start}
+.cm.usr{align-self:flex-end;align-items:flex-end}
+.cm-b{padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.55}
+.bot .cm-b{background:var(--wash2);border:1px solid var(--rim);color:var(--ink);border-bottom-left-radius:4px}
+.usr .cm-b{background:var(--amber);color:var(--ink);border-bottom-right-radius:4px}
+.cm-t{font-size:9px;color:var(--ink4);margin-top:3px;font-family:'JetBrains Mono',monospace}
+.chat-suggs{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.csugg{
+  background:var(--wash2);border:2px solid var(--amber);color:var(--amber2);
+  border-radius:18px;padding:6px 12px;font-size:11px;font-weight:800;cursor:pointer;transition:all .2s;
+}
+.csugg:hover{background:var(--amber);color:var(--ink)}
+.chat-inp-row{
+  display:flex;gap:7px;padding:9px 12px;
+  background:var(--wash2);border-top:1px solid var(--rim);flex-shrink:0;
+}
+.chat-inp{
+  flex:1;background:var(--wash3);border:1.5px solid var(--rim);
+  border-radius:20px;padding:9px 12px;font-family:'Nunito',sans-serif;
+  font-size:13px;color:var(--ink);outline:none;
+}
+.chat-inp:focus{border-color:var(--amber)}
+.chat-send{
+  width:40px;height:40px;border-radius:50%;background:var(--amber);
+  border:none;color:var(--ink);font-size:16px;cursor:pointer;flex-shrink:0;transition:all .2s;
+}
+.chat-send:hover{background:var(--amber2)}
+
+/* ════════════════════════
+   DRIVER MODE
+════════════════════════ */
+.drv-hero{background:linear-gradient(135deg,#0f172a,#1e293b);padding:28px 14px;text-align:center}
+.dh-ico{font-size:54px;margin-bottom:7px}
+.dh-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff}
+.dh-st{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:3px;color:#4b5563;margin:5px 0;
+}
+.dh-st.on{color:var(--green)}
+.tog-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px}
+.big-tog{
+  width:60px;height:32px;background:rgba(255,255,255,.1);
+  border-radius:16px;cursor:pointer;position:relative;transition:background .3s;
+}
+.big-tog.on{background:var(--green)}
+.bt-th{
+  width:26px;height:26px;background:#fff;border-radius:50%;
+  position:absolute;top:3px;left:3px;transition:left .3s;
+  box-shadow:0 2px 6px rgba(0,0,0,.3);
+}
+.big-tog.on .bt-th{left:31px}
+.drv-stats{display:flex;background:var(--wash2);border-bottom:1px solid var(--rim)}
+.dst{flex:1;text-align:center;padding:14px 4px;border-right:1px solid var(--rim)}
+.dst:last-child{border:none}
+.dst-v{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--amber2)}
+.dst-l{font-size:9px;color:var(--ink4);letter-spacing:1.5px}
+.incoming{margin:14px;background:#111827;border:2px solid var(--amber);border-radius:14px;padding:14px;display:none}
+.incoming.on{display:block}
+.inc-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--amber);letter-spacing:3px;margin-bottom:8px}
+.inc-row{font-size:12px;font-weight:700;color:#e2e8f0;padding:3px 0}
+.inc-offer{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--amber);margin:7px 0}
+.inc-bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin:7px 0}
+.inc-fill{height:100%;background:var(--amber);width:100%;transition:width .1s linear}
+.inc-btns{display:flex;gap:8px;margin-top:8px}
+.i-acc{flex:1;padding:11px;border-radius:10px;background:var(--amber);color:var(--ink);border:none;font-weight:800;font-size:13px;cursor:pointer}
+.i-dec{flex:1;padding:11px;border-radius:10px;background:rgba(255,255,255,.07);color:#6b7280;border:none;font-weight:700;font-size:13px;cursor:pointer}
+
+/* GPS live box */
+.gps-box{background:#111827;border-radius:12px;padding:13px;margin:0 14px}
+.gps-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.gps-row:last-child{border:none}
+.gk{font-size:11px;color:#4b5563;font-family:'JetBrains Mono',monospace}
+.gv{font-size:12px;font-weight:700;color:#e2e8f0;font-family:'JetBrains Mono',monospace}
+.gv.on{color:var(--green)}
+.gv.off{color:var(--red)}
+
+/* Architecture docs */
+.arch-box{background:#111827;border-radius:14px;padding:14px;margin:14px}
+.arch-ttl{color:var(--amber);font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:7px}
+.arch-code{
+  background:rgba(0,0,0,.6);border-radius:8px;padding:10px;
+  font-size:10px;line-height:1.75;border-left:3px solid var(--amber);
+  white-space:pre-wrap;word-break:break-all;margin-bottom:10px;
+  font-family:'JetBrains Mono',monospace;color:#cbd5e1;
+}
+.arch-tag{
+  display:inline-block;background:rgba(245,158,11,.13);color:var(--amber2);
+  border-radius:4px;padding:2px 7px;font-size:9px;margin:2px;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* ════════════════════════
+   ACCOUNT
+════════════════════════ */
+.acc-hero{
+  background:linear-gradient(135deg,var(--amber2),var(--amber));
+  padding:26px 14px 30px;text-align:center;
+}
+.ah-av{font-size:58px;margin-bottom:9px}
+.ah-name{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#fff}
+.ah-email{font-size:12px;color:rgba(255,255,255,.75);margin-top:3px}
+.ah-rating{font-size:12px;color:rgba(255,255,255,.9);font-weight:700;margin-top:6px}
+.ah-edit-btn{
+  margin-top:11px;background:rgba(255,255,255,.2);
+  border:1.5px solid rgba(255,255,255,.35);color:#fff;
+  padding:7px 20px;border-radius:20px;font-family:'Nunito',sans-serif;
+  font-size:12px;font-weight:800;cursor:pointer;
+}
+.acc-row{
+  display:flex;align-items:center;gap:12px;padding:14px;
+  background:var(--wash2);border-bottom:1px solid var(--rim);
+  cursor:pointer;transition:background .15s;
+  font-size:14px;font-weight:700;color:var(--ink);
+}
+.acc-row:hover{background:var(--amber3)}
+.acc-row.danger{color:var(--red)}
+.acc-row.danger:hover{background:#fff5f5}
+.ar-ico{font-size:21px;width:27px;text-align:center;flex-shrink:0}
+.ar-arr{margin-left:auto;color:var(--ink4)}
+
+/* ════════════════════════
+   MODAL
+════════════════════════ */
+.modal-bg{
+  position:fixed;inset:0;z-index:990;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(8px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-bg.on{opacity:1;pointer-events:all}
+.modal-box{
+  background:var(--wash2);border-radius:24px 24px 0 0;
+  padding:22px;width:100%;max-width:var(--W);
+  transform:translateY(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+}
+.modal-bg.on .modal-box{transform:translateY(0)}
+.mb-ttl{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--ink);margin-bottom:8px}
+.mb-body{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:18px}
+.mb-acts{display:flex;gap:8px}
+.mba{flex:1;padding:13px;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;border:none;cursor:pointer;transition:all .2s}
+.mba.prim{background:var(--amber);color:var(--ink)}
+.mba.danger{background:var(--red);color:#fff}
+.mba.sec{background:var(--wash3);border:1.5px solid var(--rim);color:var(--ink2)}
+
+/* Confirmed */
+.conf-modal{
+  position:fixed;inset:0;z-index:991;
+  background:rgba(0,0,0,.65);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.conf-modal.on{opacity:1;pointer-events:all}
+.conf-box{
+  background:var(--wash2);border-radius:22px;padding:28px 20px;
+  width:87%;max-width:340px;text-align:center;
+  transform:scale(.88);transition:transform .32s cubic-bezier(.4,0,.2,1);
+}
+.conf-modal.on .conf-box{transform:scale(1)}
+.conf-ico{font-size:52px;margin-bottom:10px}
+.conf-ttl{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--amber2);margin-bottom:6px}
+.conf-sub{font-size:13px;color:var(--ink2);margin-bottom:15px}
+.conf-det{
+  background:var(--wash3);border:1px solid var(--rim);border-radius:12px;
+  padding:13px;text-align:left;font-family:'JetBrains Mono',monospace;
+  font-size:11px;line-height:2.1;color:var(--ink2);margin-bottom:17px;
+}
+.conf-det span{color:var(--amber2);font-weight:700}
+
+/* ── TOAST ── */
+.toast-el{
+  position:fixed;bottom:84px;left:50%;transform:translateX(-50%) translateY(10px);
+  background:#111827;color:#fff;padding:10px 18px;border-radius:50px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;z-index:995;
+  opacity:0;transition:all .28s;pointer-events:none;white-space:nowrap;
+  box-shadow:0 8px 28px rgba(0,0,0,.55);
+}
+.toast-el.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ════════════════════════
+   ANIMATIONS
+════════════════════════ */
+@keyframes pageIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes gradflow{0%{background-position:0% 50%}100%{background-position:400% 50%}}
+@keyframes ripple{0%{transform:translate(-50%,-50%) scale(.5);opacity:.8}100%{transform:translate(-50%,-50%) scale(2.5);opacity:0}}
+@keyframes rpulse{0%{transform:translate(-50%,-50%) scale(1);border-color:rgba(245,158,11,.35)}100%{transform:translate(-50%,-50%) scale(1.55);border-color:transparent}}
+@keyframes rsweep{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes blinker{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes call-glow{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.5)}70%{box-shadow:0 0 0 16px rgba(245,158,11,0)}}
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+  <!-- STATUS BAR -->
+  <div class="sbar" id="sbar">
+    <span class="sbar-l" id="sbar-time">9:41</span>
+    <div class="sbar-r"><span>▪▪▪</span><span>WiFi</span><span>🔋</span></div>
+  </div>
+
+  <!-- SCREENS -->
+  <div class="screens">
+
+    <!-- ════ SPLASH ════ -->
+    <div class="screen active" id="pg-splash">
+      <div class="sp-wrap">
+        <div class="sp-bolt">⚡</div>
+        <div class="sp-logo">Quantum<span>Ride</span><br/>Hub</div>
+        <div class="sp-sub">Electric Transport Network</div>
+        <div class="sp-region">🇿🇼 Zimbabwe Edition</div>
+        <div class="sp-loader">
+          <div class="sp-track"><div class="sp-fill" id="sp-fill"></div></div>
+          <div class="sp-pct" id="sp-pct">0%</div>
+        </div>
+        <button class="sp-btn" id="sp-btn" onclick="openApp()">Open App</button>
+      </div>
+      <div class="sp-version">v5.158.0 · Build 20260312 · Zimbabwe Edition</div>
+    </div>
+
+    <!-- ════ HOME MAP ════ -->
+    <div class="screen" id="pg-home">
+      <div style="flex:1;position:relative;overflow:hidden">
+        <!-- Map stage -->
+        <div class="map-stage">
+          <!-- Google Maps — Zimbabwe (Harare) -->
+          <div class="map-view on" id="view-gmap">
+            <iframe id="gmap-frame"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d150000!2d31.0530!3d-17.8249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2szw!4v1"
+              width="100%" height="100%" style="border:0" allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <!-- Mapbox canvas -->
+          <div class="map-view" id="view-mbx">
+            <canvas id="mbx-canvas"></canvas>
+          </div>
+          <!-- Car markers -->
+          <div class="car-layer" id="car-layer"></div>
+          <!-- User pin -->
+          <div class="user-pin" id="user-pin">
+            <div class="up-r"></div><div class="up-r"></div>
+            <div class="up-c"></div>
+          </div>
+          <!-- Map controls -->
+          <div class="map-ctrls">
+            <button class="mc-btn" onclick="mapZoom(1)">+</button>
+            <button class="mc-btn" onclick="mapZoom(-1)">−</button>
+            <button class="mc-btn" onclick="locateMe()">◎</button>
+          </div>
+          <!-- Map pills -->
+          <div class="map-pills">
+            <a class="mp" href="https://www.google.com/maps/place/Harare,+Zimbabwe" target="_blank">🌐 Google Maps</a>
+            <a class="mp" href="https://www.mapbox.com" target="_blank">🗺️ Mapbox</a>
+          </div>
+        </div>
+
+        <!-- Top bar overlaid on map -->
+        <div class="map-topbar">
+          <div class="mtb-row1">
+            <div class="mtb-logo">
+              <span class="mtb-bolt">⚡</span>
+              <div>
+                <div class="mtb-name">QuantumRide Hub</div>
+                <div class="mtb-zim">ZIMBABWE · HARARE</div>
+              </div>
+            </div>
+            <button class="mtb-notif-btn" onclick="go('pg-notif','bn-alerts')">
+              🔔<span class="nb-cnt" id="home-nb-cnt">3</span>
+            </button>
+          </div>
+          <!-- Tagline -->
+          <div class="tagline-bar">
+            <div class="tgl-txt" id="tgl-txt">⚡ ZERO EMISSIONS · HARARE TO EVERYWHERE</div>
+          </div>
+          <!-- Map switch -->
+          <div class="mswitch">
+            <button class="msw-btn on" id="msw-g" onclick="switchMap('gmap',this)">Google Maps</button>
+            <button class="msw-btn" id="msw-m" onclick="switchMap('mbx',this)">Mapbox</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ride tabs -->
+      <div class="ride-tabs">
+        <button class="rt on" id="rt-city" onclick="selRideTab(this,'city')"><span class="rt-i">🏙️</span><span class="rt-l">City</span></button>
+        <button class="rt" id="rt-courier" onclick="selRideTab(this,'courier')"><span class="rt-i">📦</span><span class="rt-l">Courier</span></button>
+        <button class="rt" id="rt-c2c" onclick="selRideTab(this,'c2c')"><span class="rt-i">🛣️</span><span class="rt-l">City-to-City</span></button>
+        <button class="rt" onclick="go('pg-driver','')"><span class="rt-i">🚗</span><span class="rt-l">Driver</span></button>
+      </div>
+
+      <!-- Bottom sheet -->
+      <div class="bsheet">
+        <div class="bsh-bar"></div>
+        <!-- City -->
+        <div class="bs-pane on" id="bsp-city">
+          <div class="bs-title">Where to?</div>
+          <div class="bs-row" onclick="go('pg-pickup','bn-ride')">
+            <span class="bs-dot bs-g"></span><span class="bs-txt">Current location (Harare)</span>
+          </div>
+          <div class="bs-row" onclick="go('pg-pickup','bn-ride')">
+            <span class="bs-dot bs-r"></span><span class="bs-txt bs-ph">Enter destination…</span>
+          </div>
+          <div class="bs-chips">
+            <div class="bs-chip" onclick="qkBook('Home')">🏠 Home</div>
+            <div class="bs-chip" onclick="qkBook('Office')">🏢 Work</div>
+            <div class="bs-chip" onclick="qkBook('Airport')">✈️ Airport</div>
+          </div>
+          <div class="bs-near"><span class="near-pulse"></span><span id="near-txt">9 drivers nearby · Harare</span></div>
+        </div>
+        <!-- Courier -->
+        <div class="bs-pane" id="bsp-courier">
+          <div class="bs-title">Send a Package</div>
+          <input class="bs-input" placeholder="📦 Pickup address…"/>
+          <input class="bs-input" placeholder="🏁 Delivery address…"/>
+          <input class="bs-input" placeholder="📝 Package details…"/>
+          <button class="cta" onclick="go('pg-pickup','bn-ride')" style="margin-top:4px">Request Courier →</button>
+        </div>
+        <!-- City-to-City -->
+        <div class="bs-pane" id="bsp-c2c">
+          <div class="bs-title">City-to-City</div>
+          <input class="bs-input" placeholder="🏙️ From (e.g. Harare)…"/>
+          <input class="bs-input" placeholder="🏙️ To (e.g. Bulawayo)…"/>
+          <input class="bs-input" type="date"/>
+          <div style="display:flex;gap:8px">
+            <select class="bs-select"><option>1 passenger</option><option>2</option><option>3</option><option>4</option></select>
+            <button class="cta" style="width:auto;padding:10px 18px" onclick="go('pg-pickup','bn-ride')">Search →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ PICKUP ════ -->
+    <div class="screen" id="pg-pickup">
+      <div class="ph">
+        <button class="ph-back" onclick="go('pg-home','bn-map')">‹</button>
+        <div class="ph-title">Set Pickup</div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink4)">Step 1/4</span>
+      </div>
+      <div class="step-dots"><div class="sd done" id="sdA0"></div><div class="sd" id="sdA1"></div><div class="sd" id="sdA2"></div><div class="sd" id="sdA3"></div></div>
+      <div class="bk-mini-map"><canvas id="bkc-pickup"></canvas></div>
+      <div class="bk-form">
+        <div class="bk-row">
+          <span class="bk-dot bk-g"></span>
+          <input class="bk-inp" id="inp-from" placeholder="Pickup location in Harare…" oninput="showSugg('from',this.value)"/>
+          <button class="bk-gps" onclick="useGPS()">📡</button>
+        </div>
+      </div>
+      <div class="sugg-box" id="sb-from"></div>
+      <div class="page-body" style="padding:14px 0">
+        <div class="section-lbl">SAVED IN HARARE</div>
+        <div class="place-row" onclick="setFrom('Home — Borrowdale, Harare')"><span class="pr-ico">🏠</span><div><div class="pr-lbl">Home — Borrowdale</div><div class="pr-sub">Harare, Zimbabwe</div></div></div>
+        <div class="place-row" onclick="setFrom('Office — Samora Machel Ave, CBD')"><span class="pr-ico">🏢</span><div><div class="pr-lbl">Office — Samora Machel Ave</div><div class="pr-sub">Harare CBD, Zimbabwe</div></div></div>
+        <div class="place-row" onclick="setFrom('Robert Mugabe Airport, Harare')"><span class="pr-ico">✈️</span><div><div class="pr-lbl">Robert Mugabe Airport</div><div class="pr-sub">RGM International Airport</div></div></div>
+        <div class="place-row" onclick="setFrom('Eastgate Mall, Harare')"><span class="pr-ico">🛍️</span><div><div class="pr-lbl">Eastgate Mall</div><div class="pr-sub">Harare, Zimbabwe</div></div></div>
+        <div style="padding:14px">
+          <button class="cta" onclick="nextStep('pg-destination')">Continue to Destination →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ DESTINATION ════ -->
+    <div class="screen" id="pg-destination">
+      <div class="ph">
+        <button class="ph-back" onclick="go('pg-pickup','')">‹</button>
+        <div class="ph-title">Set Destination</div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink4)">Step 2/4</span>
+      </div>
+      <div class="step-dots"><div class="sd done"></div><div class="sd done" id="sdB1"></div><div class="sd"></div><div class="sd"></div></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:var(--wash2);border-bottom:1px solid var(--rim);font-size:12px;font-weight:700;color:var(--ink3)">
+        <span style="color:var(--green)">📍</span><span id="from-preview" style="flex:1">Pickup set</span>
+        <span>✦</span><span style="color:var(--ink4)">Destination ⟶</span>
+      </div>
+      <div class="bk-form">
+        <div class="bk-row">
+          <span class="bk-dot bk-r"></span>
+          <input class="bk-inp" id="inp-to" placeholder="Destination in Zimbabwe…" oninput="showSugg('to',this.value)"/>
+        </div>
+      </div>
+      <div class="sugg-box" id="sb-to"></div>
+      <div class="page-body" style="padding:0">
+        <div class="section-lbl">POPULAR IN ZIMBABWE</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:0 14px 14px">
+          <div class="hcat" onclick="setTo('Harare CBD')">🏙️ Harare CBD</div>
+          <div class="hcat" onclick="setTo('Robert Mugabe Airport')">✈️ Airport</div>
+          <div class="hcat" onclick="setTo('Bulawayo City Centre')">🚌 Bulawayo</div>
+          <div class="hcat" onclick="setTo('Victoria Falls')">💧 Vic Falls</div>
+          <div class="hcat" onclick="setTo('Sam Levy Village')">🛍️ Sam Levy's</div>
+          <div class="hcat" onclick="setTo('Parirenyatwa Hospital')">🏥 Hospital</div>
+          <div class="hcat" onclick="setTo('University of Zimbabwe')">🎓 UZ Campus</div>
+          <div class="hcat" onclick="setTo('Mutare City')">🏔️ Mutare</div>
+        </div>
+        <!-- Map preview -->
+        <div style="height:110px;margin:0 14px 14px;border-radius:12px;overflow:hidden;border:1px solid var(--rim);position:relative">
+          <iframe style="width:100%;height:100%;border:none" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d60000!2d31.0530!3d-17.8249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2szw!4v1" loading="lazy"></iframe>
+          <div style="position:absolute;top:7px;left:7px;background:rgba(255,255,255,.9);border-radius:6px;padding:3px 9px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink2)">Route Preview · Harare</div>
+        </div>
+        <div style="padding:0 14px"><button class="cta" onclick="nextStep('pg-fare')">Confirm Destination →</button></div>
+      </div>
+    </div>
+
+    <!-- ════ FARE ════ -->
+    <div class="screen" id="pg-fare">
+      <div class="ph">
+        <button class="ph-back" onclick="go('pg-destination','')">‹</button>
+        <div class="ph-title">Adjust Fare</div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink4)">Step 3/4</span>
+      </div>
+      <div class="step-dots"><div class="sd done"></div><div class="sd done"></div><div class="sd done"></div><div class="sd"></div></div>
+      <!-- Trip strip -->
+      <div class="trip-strip">
+        <div class="ts-cell"><div class="ts-val" id="ts-dist">12.4 km</div><div class="ts-lbl">DISTANCE</div></div>
+        <div class="ts-cell"><div class="ts-val" id="ts-eta">~22 min</div><div class="ts-lbl">ETA</div></div>
+        <div class="ts-cell"><div class="ts-val" id="ts-co2">$2.60</div><div class="ts-lbl">CO₂ SAVED</div></div>
+      </div>
+      <div class="page-body">
+        <!-- Vehicles -->
+        <div class="section-lbl" style="padding-bottom:6px">SELECT VEHICLE TYPE</div>
+        <div class="veh-grid" id="veh-grid"></div>
+        <!-- Fare -->
+        <div class="fare-wrap">
+          <div class="section-lbl" style="padding:0 0 4px">YOUR FARE OFFER (USD)</div>
+          <div class="fare-center">
+            <div class="fare-big" id="fare-display">$12</div>
+            <div class="fare-unit">YOUR OFFER TO DRIVERS</div>
+          </div>
+          <div class="fare-adj">
+            <button class="fa-btn" onclick="adjFare(-1)">−</button>
+            <input type="range" class="fare-slider" id="fare-range" min="2" max="100" value="12" oninput="syncFare(+this.value)"/>
+            <button class="fa-btn" onclick="adjFare(+1)">+</button>
+          </div>
+          <div class="fare-range"><span>$2 min</span><span>$100 max</span></div>
+          <!-- Fare negotiation tip -->
+          <div class="tip-box">
+            <span class="tip-icon">💡</span>
+            <span><b>Fare Negotiation Tip:</b> Drivers in Harare respond <b>3× faster</b> when your offer is 10–15% above base fare. During peak hours (7–9 AM, 5–7 PM) add $2–3 extra to get matched instantly.</span>
+          </div>
+        </div>
+        <div style="padding:0 14px"><button class="cta" style="margin-bottom:8px" onclick="go('pg-search','')">Find Driver ⚡</button>
+        <button class="cta outline" onclick="go('pg-destination','')">← Back</button></div>
+      </div>
+    </div>
+
+    <!-- ════ DRIVER SEARCH ════ -->
+    <div class="screen" id="pg-search" style="background:#111827">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center">
+        <div class="radar-wrap">
+          <div class="r-ring rr1"></div><div class="r-ring rr2"></div><div class="r-ring rr3"></div>
+          <div class="r-sweep"></div>
+          <div class="r-core">🚗</div>
+        </div>
+        <div class="srch-title">Finding Driver…</div>
+        <div class="srch-offer" id="srch-offer">OFFER: $12 · ECAR · HARARE</div>
+        <div class="srch-status" id="srch-status">Broadcasting to 9 nearby drivers</div>
+        <div class="srch-timer" id="srch-timer">0:00</div>
+        <div id="offer-cards" style="width:100%;margin-bottom:14px"></div>
+        <button class="srch-cancel" onclick="go('pg-fare','')">✕ Cancel Search</button>
+      </div>
+    </div>
+
+    <!-- ════ DRIVER APPROACHING ════ -->
+    <div class="screen" id="pg-riding">
+      <div class="ride-map" id="ride-map-wrap">
+        <canvas id="ride-canvas"></canvas>
+        <div class="ride-overlay">
+          <div class="ride-card">
+            <div class="rc-drv-row">
+              <div class="rc-avatar" id="rc-av">👨‍💼</div>
+              <div class="rc-info">
+                <div class="rc-name" id="rc-name">Tafadzwa M.</div>
+                <div class="rc-veh" id="rc-veh">🚗 Toyota Vitz · ABC 1234</div>
+                <div class="rc-stars">⭐ 4.9 · 1,204 trips</div>
+              </div>
+              <div class="rc-eta-badge">
+                <div class="rc-eta-n" id="rc-eta">5</div>
+                <div class="rc-eta-l">MIN AWAY</div>
+              </div>
+            </div>
+            <div class="rc-progress"><div class="rc-prog-fill" id="rc-prog"></div></div>
+            <div class="rc-route">
+              <span style="color:var(--green)">📍</span>
+              <span id="rc-from" style="flex:1">Pickup</span>
+              <span>→</span>
+              <span id="rc-to" style="flex:1;text-align:right">Destination</span>
+              <span style="color:var(--red)">🏁</span>
+            </div>
+            <div class="rc-actions">
+              <button class="rca-call" onclick="openCall()">📞 Call Driver</button>
+              <button class="rca-cancel" onclick="go('pg-home','bn-map')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ NOTIFICATIONS ════ -->
+    <div class="screen" id="pg-notif">
+      <div class="ph">
+        <button class="ph-back" onclick="go('pg-home','bn-map')">‹</button>
+        <div class="ph-title">Notifications</div>
+        <button class="ph-action" onclick="clearAllNotifs()">Clear All</button>
+      </div>
+      <div class="sc-scroll" id="notif-list"></div>
+    </div>
+
+    <!-- ════ SAFETY ════ -->
+    <div class="screen" id="pg-safety">
+      <div class="safety-hero">
+        <div class="sh-icon">🛡️</div>
+        <div class="sh-title">Your Safety Matters</div>
+        <div class="sh-sub">Every QuantumRide trip is protected</div>
+      </div>
+      <div class="ph" style="padding-top:14px">
+        <button class="ph-back" onclick="go('pg-account','bn-account')">‹</button>
+        <div class="ph-title">Safety Center</div>
+      </div>
+      <div class="sc-scroll">
+        <div class="sf-row" onclick="toggleSf('live')"><span class="sf-ico">📡</span><div class="sf-info"><div class="sf-name">Share Live Location</div><div class="sf-desc">Share trip with trusted contacts</div></div><div class="toggl on" id="sf-live"><div class="toggl-th"></div></div></div>
+        <div class="sf-row"><span class="sf-ico">✅</span><div class="sf-info"><div class="sf-name">Driver Verification</div><div class="sf-desc">All drivers pass background checks</div></div><div class="toggl on"><div class="toggl-th"></div></div></div>
+        <div class="sf-row" onclick="callSOS()"><span class="sf-ico">🆘</span><div class="sf-info"><div class="sf-name">SOS Emergency Button</div><div class="sf-desc">Alerts police + trusted contacts instantly</div></div><span style="font-size:18px;color:var(--ink4)">›</span></div>
+        <div class="sf-row"><span class="sf-ico">📞</span><div class="sf-info"><div class="sf-name">Masked Phone Numbers</div><div class="sf-desc">Your number stays private always</div></div><span style="font-size:18px;color:var(--ink4)">›</span></div>
+        <div class="sf-row"><span class="sf-ico">🚨</span><div class="sf-info"><div class="sf-name">Report an Incident</div><div class="sf-desc">24/7 Zimbabwe support team</div></div><span style="font-size:18px;color:var(--ink4)">›</span></div>
+        <div class="sf-row"><span class="sf-ico">📹</span><div class="sf-info"><div class="sf-name">In-Trip Monitoring</div><div class="sf-desc">Optional audio safety recording</div></div><span style="font-size:18px;color:var(--ink4)">›</span></div>
+        <div class="section-lbl">TRUSTED CONTACTS</div>
+        <div style="margin:0 14px 14px;padding:13px;background:var(--wash2);border:2px dashed var(--rim);border-radius:12px;text-align:center;color:var(--amber2);font-weight:800;cursor:pointer" onclick="toast('➕ Add trusted contact')">+ Add Trusted Contact</div>
+      </div>
+    </div>
+
+    <!-- ════ SETTINGS ════ -->
+    <div class="screen" id="pg-settings">
+      <div class="ph">
+        <button class="ph-back" onclick="go('pg-account','bn-account')">‹</button>
+        <div class="ph-title">Settings</div>
+      </div>
+      <div class="sc-scroll">
+        <div class="sg"><div class="sg-lbl">APP PREFERENCES</div>
+          <div class="s-row" onclick="go('pg-language','')"><span class="s-ico">🌐</span><div class="s-inf"><div class="s-nm">Language</div><div class="s-vl" id="s-lang-val">English</div></div><span class="s-arr">›</span></div>
+          <div class="s-row" onclick="go('pg-units','')"><span class="s-ico">📏</span><div class="s-inf"><div class="s-nm">Distance Units</div><div class="s-vl" id="s-unit-val">Kilometers (km)</div></div><span class="s-arr">›</span></div>
+          <div class="s-row" onclick="go('pg-appear','')"><span class="s-ico">🎨</span><div class="s-inf"><div class="s-nm">Appearance</div><div class="s-vl" id="s-ap-val">System Default</div></div><span class="s-arr">›</span></div>
+          <div class="s-row"><span class="s-ico">🔔</span><div class="s-inf"><div class="s-nm">Push Notifications</div><div class="s-vl">Enabled</div></div><span class="s-arr">›</span></div>
+        </div>
+        <div class="sg"><div class="sg-lbl">PRIVACY & LEGAL</div>
+          <div class="s-row" onclick="go('pg-legal','')"><span class="s-ico">📄</span><div class="s-inf"><div class="s-nm">Legal Documents</div></div><span class="s-arr">›</span></div>
+          <div class="s-row" onclick="go('pg-safety','')"><span class="s-ico">🛡️</span><div class="s-inf"><div class="s-nm">Safety Settings</div></div><span class="s-arr">›</span></div>
+        </div>
+        <div class="sg"><div class="sg-lbl">SUPPORT</div>
+          <div class="s-row" onclick="go('pg-help','')"><span class="s-ico">❓</span><div class="s-inf"><div class="s-nm">Help Center</div></div><span class="s-arr">›</span></div>
+          <div class="s-row" onclick="go('pg-support','')"><span class="s-ico">💬</span><div class="s-inf"><div class="s-nm">Contact Support</div></div><span class="s-arr">›</span></div>
+        </div>
+        <div class="sg"><div class="sg-lbl">ACCOUNT</div>
+          <div class="s-row danger" onclick="confirmLogout()"><span class="s-ico">🚪</span><div class="s-inf"><div class="s-nm">Log Out</div></div></div>
+          <div class="s-row danger" onclick="confirmDelete()"><span class="s-ico">🗑️</span><div class="s-inf"><div class="s-nm">Delete Account</div></div></div>
+        </div>
+        <div class="ver-card">
+          <div class="ver-logo">⚡ QuantumRide Hub</div>
+          <div class="ver-n">Version 5.158.0</div>
+          <div class="ver-b">Build 20260312 · Zimbabwe Edition · Production</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ LANGUAGE ════ -->
+    <div class="screen" id="pg-language">
+      <div class="ph"><button class="ph-back" onclick="go('pg-settings','')">‹</button><div class="ph-title">Language</div></div>
+      <div class="ls-wrap"><input class="ls-inp" id="ls-filter" placeholder="🔍 Search languages…" oninput="filterLang(this.value)"/></div>
+      <div class="sc-scroll" id="lang-list"></div>
+    </div>
+
+    <!-- ════ UNITS ════ -->
+    <div class="screen" id="pg-units">
+      <div class="ph"><button class="ph-back" onclick="go('pg-settings','')">‹</button><div class="ph-title">Distance Units</div></div>
+      <div class="sc-scroll">
+        <div class="unit-desc">Select how distances are displayed throughout the app.</div>
+        <div class="unit-opt sel" id="uo-km" onclick="selUnit('km',this)">
+          <div><div class="uo-lbl">Kilometers (km)</div><div class="uo-desc">ISO standard · Used in Zimbabwe &amp; most of Africa</div></div>
+          <div class="uo-radio sel" id="ur-km"></div>
+        </div>
+        <div class="unit-opt" id="uo-mi" onclick="selUnit('mi',this)">
+          <div><div class="uo-lbl">Miles (mi)</div><div class="uo-desc">Used in USA, UK, Liberia, Myanmar</div></div>
+          <div class="uo-radio" id="ur-mi"></div>
+        </div>
+        <div class="unit-preview">
+          <div class="up-lbl">LIVE PREVIEW</div>
+          <div class="up-ex" id="unit-preview">Distance: 12.4 km · ETA: ~22 min · Base fare: $12</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ APPEARANCE ════ -->
+    <div class="screen" id="pg-appear">
+      <div class="ph"><button class="ph-back" onclick="go('pg-settings','')">‹</button><div class="ph-title">Appearance</div></div>
+      <div class="sc-scroll" style="padding-top:14px">
+        <div class="ap-opt sel" id="ap-sys" onclick="selAppear('System Default',this)">
+          <div class="ap-preview"><div class="ap-half-l"></div><div class="ap-half-d"></div></div>
+          <div class="ap-lbl">System Default</div><div class="ap-radio sel"></div>
+        </div>
+        <div class="ap-opt" id="ap-light" onclick="selAppear('Light',this)">
+          <div class="ap-preview" style="background:#f5f7fa"></div>
+          <div class="ap-lbl">Light</div><div class="ap-radio"></div>
+        </div>
+        <div class="ap-opt" id="ap-dark" onclick="selAppear('Dark',this)">
+          <div class="ap-preview" style="background:#111827"></div>
+          <div class="ap-lbl">Dark</div><div class="ap-radio"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ LEGAL ════ -->
+    <div class="screen" id="pg-legal">
+      <div class="ph"><button class="ph-back" onclick="go('pg-settings','')">‹</button><div class="ph-title">Legal Documents</div></div>
+      <div class="sc-scroll" style="padding:14px;display:flex;flex-direction:column;gap:8px">
+        <div class="legal-it" onclick="showLegal('terms')"><span style="font-size:26px">📋</span><div><div class="li-nm">Terms of Service</div><div class="li-dt">Updated Mar 1, 2026</div></div><span class="s-arr">›</span></div>
+        <div class="legal-it" onclick="showLegal('privacy')"><span style="font-size:26px">🔒</span><div><div class="li-nm">Privacy Policy</div><div class="li-dt">Updated Feb 15, 2026</div></div><span class="s-arr">›</span></div>
+        <div class="legal-it" onclick="showLegal('cookie')"><span style="font-size:26px">🍪</span><div><div class="li-nm">Cookie Policy</div><div class="li-dt">Updated Jan 10, 2026</div></div><span class="s-arr">›</span></div>
+        <div class="legal-it" onclick="showLegal('driver')"><span style="font-size:26px">🚗</span><div><div class="li-nm">Driver Agreement</div><div class="li-dt">Updated Mar 1, 2026</div></div><span class="s-arr">›</span></div>
+        <div class="legal-it" onclick="showLegal('zdpa')"><span style="font-size:26px">🇿🇼</span><div><div class="li-nm">Zimbabwe Data Protection Act</div><div class="li-dt">Updated Dec 5, 2025</div></div><span class="s-arr">›</span></div>
+        <div class="legal-it" onclick="showLegal('oss')"><span style="font-size:26px">📝</span><div><div class="li-nm">Open Source Licenses</div><div class="li-dt">v5.158.0 · Third-party</div></div><span class="s-arr">›</span></div>
+      </div>
+    </div>
+
+    <!-- ════ HELP ════ -->
+    <div class="screen" id="pg-help">
+      <div class="ph"><button class="ph-back" onclick="go('pg-settings','')">‹</button><div class="ph-title">Help Center</div></div>
+      <div class="sc-scroll">
+        <input class="bs-input" style="margin:14px;width:calc(100% - 28px)" placeholder="🔍 Search help articles…"/>
+        <div class="help-cats">
+          <div class="hcat" onclick="toast('🚀 Getting Started guide')">🚀 Getting Started</div>
+          <div class="hcat" onclick="toast('💳 Payment Methods')">💳 Payments</div>
+          <div class="hcat" onclick="toast('📍 Tracking & Map')">📍 Tracking</div>
+          <div class="hcat" onclick="toast('🛡️ Safety features')">🛡️ Safety</div>
+          <div class="hcat" onclick="toast('🚗 Become a Driver')">🚗 Drivers</div>
+          <div class="hcat" onclick="toast('📊 My Account')">📊 Account</div>
+        </div>
+        <div class="section-lbl">FREQUENTLY ASKED</div>
+        <div class="faq-it" onclick="this.classList.toggle('open')"><div class="faq-q">How does fare negotiation work? <span>›</span></div><div class="faq-a">You set your own price offer. Nearby drivers see it and can accept, decline, or counter-offer. You choose which driver to accept — full price transparency, no hidden fees.</div></div>
+        <div class="faq-it" onclick="this.classList.toggle('open')"><div class="faq-q">Why did my driver call me? <span>›</span></div><div class="faq-a">After accepting your ride, drivers are encouraged to call and confirm exact pickup details. Phone numbers are always masked — your real number is never shared with the driver.</div></div>
+        <div class="faq-it" onclick="this.classList.toggle('open')"><div class="faq-q">What payment methods are accepted? <span>›</span></div><div class="faq-a">Cash (USD/ZWL), EcoCash, Mukuru, Paynow, and in-app wallet. Visa/Mastercard card support coming Q3 2026.</div></div>
+        <div class="faq-it" onclick="this.classList.toggle('open')"><div class="faq-q">Where does QuantumRide operate? <span>›</span></div><div class="faq-a">Currently active in Harare, Bulawayo, Mutare, Gweru, and Masvingo. Expanding to 20+ Zimbabwe cities by end of 2026.</div></div>
+        <div class="faq-it" onclick="this.classList.toggle('open')"><div class="faq-q">How accurate is the live car tracking? <span>›</span></div><div class="faq-a">Driver GPS updates every 3 seconds via WebSockets from the driver's phone. Car markers animate smoothly between GPS positions using linear interpolation — accuracy is ±4 metres with modern phones.</div></div>
+      </div>
+    </div>
+
+    <!-- ════ SUPPORT CHAT ════ -->
+    <div class="screen" id="pg-support" style="background:var(--wash3)">
+      <div class="ph">
+        <button class="ph-back" onclick="go('pg-settings','')">‹</button>
+        <div class="ph-title">Support Chat</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--green)"><span style="width:7px;height:7px;background:var(--green);border-radius:50%;animation:blinker 1.4s infinite;display:block"></span>Online</div>
+      </div>
+      <div class="chat-body" id="chat-body">
+        <div class="cm bot"><div class="cm-b">👋 Hi! I'm your QuantumRide Zimbabwe support assistant. How can I help you today?</div><div class="cm-t">Now</div></div>
+        <div class="chat-suggs" id="chat-suggs">
+          <button class="csugg" onclick="sendSugg(this)">Ride issue</button>
+          <button class="csugg" onclick="sendSugg(this)">Payment problem</button>
+          <button class="csugg" onclick="sendSugg(this)">Driver complaint</button>
+          <button class="csugg" onclick="sendSugg(this)">Lost item</button>
+          <button class="csugg" onclick="sendSugg(this)">Account help</button>
+        </div>
+      </div>
+      <div class="chat-inp-row">
+        <input class="chat-inp" id="chat-inp" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendChat()"/>
+        <button class="chat-send" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+
+    <!-- ════ DRIVER MODE ════ -->
+    <div class="screen" id="pg-driver">
+      <div class="drv-hero">
+        <div class="dh-ico">🚗</div>
+        <div class="dh-name">Driver Dashboard</div>
+        <div class="dh-st" id="drv-st-lbl">OFFLINE</div>
+        <div class="tog-row">
+          <span style="font-size:13px;font-weight:800;color:#6b7280">Go Online</span>
+          <div class="big-tog" id="big-tog" onclick="toggleDriverOnline()"><div class="bt-th"></div></div>
+        </div>
+      </div>
+      <div class="ph" style="padding-top:14px">
+        <button class="ph-back" onclick="go('pg-home','bn-map')">‹</button>
+        <div class="ph-title">Driver Mode</div>
+      </div>
+      <div class="sc-scroll">
+        <div class="drv-stats">
+          <div class="dst"><div class="dst-v">$42</div><div class="dst-l">TODAY</div></div>
+          <div class="dst"><div class="dst-v">7</div><div class="dst-l">TRIPS</div></div>
+          <div class="dst"><div class="dst-v">4.9★</div><div class="dst-l">RATING</div></div>
+          <div class="dst"><div class="dst-v">94%</div><div class="dst-l">ACCEPT</div></div>
+        </div>
+        <!-- Incoming ride request -->
+        <div class="incoming" id="incoming-req">
+          <div class="inc-lbl">🔔 INCOMING RIDE REQUEST</div>
+          <div class="inc-row" id="inc-from">📍 Borrowdale, Harare</div>
+          <div class="inc-row" id="inc-to">🏁 Robert Mugabe Airport</div>
+          <div class="inc-offer" id="inc-offer">Offer: $18</div>
+          <div class="inc-bar"><div class="inc-fill" id="inc-fill"></div></div>
+          <div class="inc-btns">
+            <button class="i-acc" onclick="drvAccept()">✅ Accept Ride</button>
+            <button class="i-dec" onclick="drvDecline()">✗ Decline</button>
+          </div>
+        </div>
+        <!-- Live GPS -->
+        <div class="section-lbl">LIVE GPS FEED · HARARE</div>
+        <div class="gps-box">
+          <div class="gps-row"><span class="gk">Driver ID</span><span class="gv">DRV_ZW_582</span></div>
+          <div class="gps-row"><span class="gk">Latitude</span><span class="gv" id="gps-lat">-17.8249</span></div>
+          <div class="gps-row"><span class="gk">Longitude</span><span class="gv" id="gps-lng">31.0530</span></div>
+          <div class="gps-row"><span class="gk">Speed</span><span class="gv" id="gps-spd">0 km/h</span></div>
+          <div class="gps-row"><span class="gk">Accuracy</span><span class="gv">±4 metres</span></div>
+          <div class="gps-row"><span class="gk">WebSocket</span><span class="gv off" id="ws-st">● Disconnected</span></div>
+          <div class="gps-row"><span class="gk">Update Rate</span><span class="gv">Every 3 seconds</span></div>
+          <div class="gps-row"><span class="gk">Protocol</span><span class="gv">Socket.io v4</span></div>
+        </div>
+        <!-- Architecture docs -->
+        <div class="section-lbl" style="margin-top:6px">SYSTEM ARCHITECTURE — REAL-TIME GPS</div>
+        <div class="arch-box" id="arch-docs"></div>
+        <div style="height:14px"></div>
+      </div>
+    </div>
+
+    <!-- ════ ACCOUNT ════ -->
+    <div class="screen" id="pg-account">
+      <div class="acc-hero">
+        <div class="ah-av">👤</div>
+        <div class="ah-name" id="acc-name">Alex Moyo</div>
+        <div class="ah-email" id="acc-email">alex.moyo@gmail.com</div>
+        <div class="ah-rating">⭐ 4.8 · 34 trips · Harare, ZW</div>
+        <button class="ah-edit-btn" onclick="editProfile()">✏️ Edit Profile</button>
+      </div>
+      <div class="sc-scroll">
+        <div class="acc-row" onclick="go('pg-home','bn-map')"><span class="ar-ico">🗺️</span>Book a Ride<span class="ar-arr">›</span></div>
+        <div class="acc-row" onclick="toast('📋 Trip history: 34 trips')"><span class="ar-ico">📋</span>Trip History<span class="ar-arr">›</span></div>
+        <div class="acc-row" onclick="toast('💳 EcoCash · Mukuru · Paynow · Cash')"><span class="ar-ico">💳</span>Payment Methods<span class="ar-arr">›</span></div>
+        <div class="acc-row" onclick="go('pg-notif','bn-alerts')" style="position:relative"><span class="ar-ico">🔔</span>Notifications<span style="background:var(--red);color:#fff;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:800;margin-left:auto" id="acc-nb-cnt">3</span></div>
+        <div class="acc-row" onclick="go('pg-safety','')"><span class="ar-ico">🛡️</span>Safety<span class="ar-arr">›</span></div>
+        <div class="acc-row" onclick="go('pg-settings','')"><span class="ar-ico">⚙️</span>Settings<span class="ar-arr">›</span></div>
+        <div class="acc-row" onclick="go('pg-help','')"><span class="ar-ico">❓</span>Help Center<span class="ar-arr">›</span></div>
+        <div class="acc-row" onclick="go('pg-support','')"><span class="ar-ico">💬</span>Support Chat<span class="ar-arr">›</span></div>
+        <div class="acc-row" onclick="go('pg-driver','')"><span class="ar-ico">🚗</span>Driver Mode<span class="ar-arr">›</span></div>
+        <div class="acc-row danger" onclick="confirmLogout()"><span class="ar-ico">🚪</span>Log Out</div>
+        <div class="acc-row danger" onclick="confirmDelete()"><span class="ar-ico">🗑️</span>Delete Account</div>
+        <div style="padding:14px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink4)">v5.158.0 · Zimbabwe Edition · Build 20260312</div>
+      </div>
+    </div>
+
+  </div><!-- /screens -->
+
+  <!-- BOTTOM NAV -->
+  <nav class="bnav" id="bnav">
+    <button class="bn on" id="bn-map" onclick="go('pg-home','bn-map')">
+      <span class="bn-icon">🗺️</span><span class="bn-label">Map</span>
+    </button>
+    <button class="bn" id="bn-ride" onclick="go('pg-pickup','bn-ride')">
+      <span class="bn-icon">⚡</span><span class="bn-label">Ride</span>
+    </button>
+    <button class="bn" id="bn-alerts" onclick="go('pg-notif','bn-alerts')" style="position:relative">
+      <span class="bn-icon">🔔</span><span class="bn-label">Alerts</span>
+      <span class="bn-dot" id="bn-dot"></span>
+    </button>
+    <button class="bn" id="bn-account" onclick="go('pg-account','bn-account')">
+      <span class="bn-icon">👤</span><span class="bn-label">Account</span>
+    </button>
+  </nav>
+</div><!-- /phone -->
+
+<!-- CALL MODAL -->
+<div class="call-modal" id="call-modal">
+  <div class="call-box">
+    <div class="call-av" id="c-av">👨‍💼</div>
+    <div class="call-name" id="c-name">Tafadzwa M.</div>
+    <div class="call-sub">YOUR DRIVER IS CALLING · RIDE CONFIRMED</div>
+    <div class="call-btns">
+      <div><button class="c-end" onclick="endCall()">📵</button><div class="c-lbl">Decline</div></div>
+      <div><button class="c-ans" onclick="answerCall()">📞</button><div class="c-lbl">Answer</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal-bg" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="mb-ttl" id="mb-ttl"></div>
+    <div class="mb-body" id="mb-body"></div>
+    <div class="mb-acts" id="mb-acts"></div>
+  </div>
+</div>
+
+<!-- CONFIRMED MODAL -->
+<div class="conf-modal" id="conf-modal">
+  <div class="conf-box">
+    <div class="conf-ico">✅</div>
+    <div class="conf-ttl">Ride Confirmed!</div>
+    <div class="conf-sub" id="conf-sub">Your driver is on the way.</div>
+    <div class="conf-det" id="conf-det"></div>
+    <button class="cta" onclick="closeConf()">Track My Driver →</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-el" id="toast-el"></div>
+
+<script>
+/* ══════════════════════════════════════════
+   QUANTUMRIDE HUB · Zimbabwe v5.158.0
+   Complete JS
+══════════════════════════════════════════ */
+
+// ── CLOCK ──
+function tick(){const n=new Date();document.getElementById('sbar-time').textContent=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0')}
+tick();setInterval(tick,30000);
+
+// ── SPLASH ──
+(()=>{
+  let p=0;const fill=document.getElementById('sp-fill'),pct=document.getElementById('sp-pct');
+  const iv=setInterval(()=>{
+    p+=Math.random()*5+1.5;if(p>=100){p=100;clearInterval(iv);
+      fill.style.width='100%';pct.textContent='100%';
+      setTimeout(()=>{document.getElementById('sp-btn').style.display='block'},350);}
+    else{fill.style.width=p+'%';pct.textContent=Math.floor(p)+'%';}
+  },55);
+})();
+function openApp(){go('pg-home','bn-map');initHomeMap();}
+
+// ── NAVIGATION ──
+function go(id,bnId){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id)?.classList.add('active');
+  if(bnId){
+    document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));
+    document.getElementById(bnId)?.classList.add('on');
+  }
+  // Page init hooks
+  if(id==='pg-home')initHomeMap();
+  if(id==='pg-driver')initDriverPage();
+  if(id==='pg-language')renderLangs('');
+  if(id==='pg-notif')renderNotifs();
+  if(id==='pg-search')startSearch();
+  if(id==='pg-riding')initRidingMap();
+  if(id==='pg-pickup')drawPickupMiniMap();
+  if(id==='pg-fare')buildFarePage();
+}
+
+// ── TAGLINES ──
+const TAGLINES=['⚡ ZERO EMISSIONS · HARARE TO EVERYWHERE','🚗 TRANSPARENT FARES · NO SURPRISES','🌍 CONNECTING ZIMBABWE CITY BY CITY','💚 100% ELECTRIC · CARBON NEUTRAL BY 2026','🛴 SCOOTERS · CARS · COURIERS · CITY-TO-CITY','⚡ YOUR FARE · YOUR CHOICE · YOUR RIDE'];
+let ti=0;
+const tEl=document.getElementById('tgl-txt');
+setInterval(()=>{
+  tEl.style.opacity='0';
+  setTimeout(()=>{ti=(ti+1)%TAGLINES.length;tEl.textContent=TAGLINES[ti];tEl.style.opacity='1';},400);
+},3800);
+
+// ── RIDE TABS ──
+function selRideTab(btn,type){
+  document.querySelectorAll('.rt').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.bs-pane').forEach(p=>p.classList.remove('on'));
+  document.getElementById('bsp-'+type)?.classList.add('on');
+}
+
+// ══════════════════════════════════════
+//  HOME MAP — Harare, Zimbabwe
+//  GPS simulation — inDrive style
+// ══════════════════════════════════════
+const ZW_DRIVERS=[
+  {id:'zd1',x:22,y:28,dx:.3,dy:.2,ico:'🚗',name:'Tafadzwa · eCar',spd:32},
+  {id:'zd2',x:66,y:22,dx:-.22,dy:.28,ico:'🚗',name:'Chiedza · Vitz',spd:28},
+  {id:'zd3',x:38,y:62,dx:.33,dy:-.18,ico:'🚐',name:'Munashe · Kombi',spd:44},
+  {id:'zd4',x:76,y:55,dx:-.28,dy:.22,ico:'🚗',name:'Rutendo · Corolla',spd:37},
+  {id:'zd5',x:50,y:78,dx:.2,dy:-.32,ico:'🛴',name:'Nyasha · Scooter',spd:19},
+  {id:'zd6',x:86,y:18,dx:-.38,dy:.28,ico:'🚗',name:'Farai · Sedan',spd:41},
+  {id:'zd7',x:14,y:74,dx:.32,dy:-.17,ico:'🚗',name:'Simba · eCar',spd:34},
+  {id:'zd8',x:58,y:10,dx:-.18,dy:.38,ico:'🚲',name:'Rudo · eBike',spd:17},
+];
+let homeInited=false;
+
+function initHomeMap(){
+  if(homeInited)return;homeInited=true;
+  placeCarMarkers();
+  startGPSSim();
+  drawMapbox();
+  updateNearby();
+  setInterval(updateNearby,7500);
+}
+
+function placeCarMarkers(){
+  const layer=document.getElementById('car-layer');if(!layer)return;
+  layer.innerHTML='';
+  const W=layer.offsetWidth||390,H=layer.offsetHeight||500;
+  ZW_DRIVERS.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='car-mk';el.id='cmk-'+d.id;
+    el.style.left=(d.x/100*W)+'px';el.style.top=(d.y/100*H)+'px';
+    el.innerHTML=d.ico+'<div class="ck-tip">'+d.name+'</div>';
+    el.onclick=()=>toast(d.ico+' '+d.name+' · '+(Math.random()*.8+.2).toFixed(1)+' km · '+d.spd+' km/h');
+    layer.appendChild(el);
+  });
+}
+
+// GPS simulation — updates every 3s (same as real ride-hailing apps)
+function startGPSSim(){
+  setInterval(()=>{
+    const layer=document.getElementById('car-layer');if(!layer)return;
+    const W=layer.offsetWidth||390,H=layer.offsetHeight||500;
+    ZW_DRIVERS.forEach(d=>{
+      d.x+=d.dx*(0.7+Math.random()*.5);d.y+=d.dy*(0.7+Math.random()*.5);
+      if(d.x<2||d.x>94)d.dx*=-1;if(d.y<2||d.y>94)d.dy*=-1;
+      d.x=Math.max(2,Math.min(94,d.x));d.y=Math.max(2,Math.min(94,d.y));
+      const el=document.getElementById('cmk-'+d.id);
+      if(el){el.style.left=(d.x/100*W)+'px';el.style.top=(d.y/100*H)+'px';}
+    });
+    // Sync GPS display if Driver Mode is open
+    if(document.getElementById('pg-driver')?.classList.contains('active')){
+      const d=ZW_DRIVERS[0];
+      document.getElementById('gps-lat').textContent=(-17.8249+d.y/10000).toFixed(6);
+      document.getElementById('gps-lng').textContent=(31.0530+d.x/10000).toFixed(6);
+      document.getElementById('gps-spd').textContent=d.spd+' km/h';
+    }
+  },3000);
+}
+
+// Mapbox dark canvas — simulated Harare city
+function drawMapbox(){
+  const cnv=document.getElementById('mbx-canvas');if(!cnv)return;
+  const par=cnv.parentElement;
+  cnv.width=par.offsetWidth||390;cnv.height=par.offsetHeight||500;
+  const ctx=cnv.getContext('2d'),W=cnv.width,H=cnv.height;
+  ctx.fillStyle='#0f172a';ctx.fillRect(0,0,W,H);
+  // City grid
+  ctx.strokeStyle='rgba(245,158,11,.04)';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  // Roads
+  ctx.strokeStyle='rgba(255,255,255,.09)';ctx.lineWidth=5;
+  [H*.22,H*.45,H*.68,H*.88].forEach(y=>{ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();});
+  [W*.18,W*.38,W*.58,W*.78].forEach(x=>{ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();});
+  // Main roads (amber glow)
+  ctx.strokeStyle='rgba(245,158,11,.18)';ctx.lineWidth=9;
+  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+  // Buildings
+  const bc=['#0f2137','#0a1a2e','#071422','#0d1f38'];
+  [[22,18,72,52],[108,12,60,65],[186,20,68,47],[274,14,80,60],[W-105,18,72,55],
+   [16,H*.3,68,48],[116,H*.32,82,43],[218,H*.28,66,56],[W-88,H*.3,76,52],
+   [18,H*.58,80,46],[128,H*.6,72,58],[232,H*.56,74,50],[W-100,H*.58,80,48],
+   [18,H-82,88,55],[140,H-88,74,60],[264,H-78,82,52],[W-95,H-82,78,55]
+  ].forEach((b,i)=>{
+    ctx.fillStyle=bc[i%4];ctx.strokeStyle='rgba(245,158,11,.06)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.roundRect(b[0],b[1],b[2],b[3],3);ctx.fill();ctx.stroke();
+    ctx.fillStyle='rgba(255,200,80,.1)';
+    for(let wy=b[1]+7;wy<b[1]+b[3]-7;wy+=13)
+      for(let wx=b[0]+7;wx<b[0]+b[2]-7;wx+=11)
+        if(Math.random()>.42)ctx.fillRect(wx,wy,7,9);
+  });
+  ctx.font='bold 12px JetBrains Mono,monospace';ctx.fillStyle='rgba(245,158,11,.45)';ctx.textAlign='right';
+  ctx.fillText('MAPBOX · HARARE, ZIMBABWE',W-14,H-14);
+  ctx.font='9px JetBrains Mono,monospace';ctx.fillStyle='rgba(255,255,255,.14)';ctx.fillText('© Mapbox · OpenStreetMap',W-14,H-4);
+}
+
+let curMap='gmap';
+function switchMap(id,btn){
+  document.querySelectorAll('.msw-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');curMap=id;
+  if(id==='gmap'){document.getElementById('view-gmap').classList.add('on');document.getElementById('view-mbx').classList.remove('on');}
+  else{document.getElementById('view-mbx').classList.add('on');document.getElementById('view-gmap').classList.remove('on');drawMapbox();}
+  toast('🗺️ Switched to '+(id==='gmap'?'Google Maps Zimbabwe':'Mapbox Dark'));
+}
+
+function locateMe(){
+  toast('📡 Locating in Harare…');
+  navigator.geolocation?.getCurrentPosition(p=>{
+    const{latitude:la,longitude:lo}=p.coords;
+    document.getElementById('gmap-frame').src=`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5000!2d${lo}!3d${la}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2szw!4v1`;
+    toast('✅ Located: '+la.toFixed(4)+'°S');
+  },()=>toast('📍 Default: Harare CBD'));
+}
+
+function mapZoom(d){toast('🔍 Zoom '+(d>0?'+':'-'))}
+function updateNearby(){const el=document.getElementById('near-txt');if(el)el.textContent=(7+Math.floor(Math.random()*5))+' drivers nearby · Harare';}
+
+// Pickup mini map
+function drawPickupMiniMap(){
+  const cnv=document.getElementById('bkc-pickup');if(!cnv)return;
+  const par=cnv.parentElement;cnv.width=par.offsetWidth;cnv.height=par.offsetHeight;
+  const ctx=cnv.getContext('2d'),W=cnv.width,H=cnv.height;
+  ctx.fillStyle='#e0f0d8';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,.8)';ctx.lineWidth=8;
+  [H*.35,H*.65].forEach(y=>{ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();});
+  [W*.25,W*.55,W*.8].forEach(x=>{ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();});
+  ctx.strokeStyle='rgba(245,158,11,.3)';ctx.lineWidth=12;
+  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+  [[15,10,60,40],[88,8,55,38],[165,12,65,44],[248,8,72,42],[W-95,10,70,40],
+   [10,H*.5,62,36],[105,H*.48,70,40],[198,H*.52,60,35],[W-80,H*.5,68,38]].forEach(b=>{
+    ctx.fillStyle='#c8d8c0';ctx.strokeStyle='rgba(0,0,0,.05)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.roundRect(b[0],b[1],b[2],b[3],3);ctx.fill();ctx.stroke();
+  });
+  ctx.font='22px serif';ctx.textAlign='center';ctx.fillText('📍',W/2,H/2-8);
+}
+
+// ══════════════════════════════════════
+//  BOOKING FLOW
+// ══════════════════════════════════════
+const ZW_LOCS=[
+  {e:'🏙️',l:'Harare CBD, Zimbabwe'},{e:'✈️',l:'Robert Mugabe Intl Airport, Harare'},
+  {e:'🛍️',l:'Eastgate Mall, Harare'},{e:'🏫',l:'University of Zimbabwe, Mount Pleasant'},
+  {e:'🏥',l:'Parirenyatwa Hospital, Harare'},{e:'🌿',l:'Borrowdale, Harare'},
+  {e:'🏘️',l:'Chitungwiza, Harare'},{e:'🏪',l:'Sam Levy Village, Borrowdale'},
+  {e:'🌆',l:'Bulawayo City Centre'},{e:'💧',l:'Victoria Falls'},
+  {e:'🏔️',l:'Mutare City, Manicaland'},{e:'🏗️',l:'Gweru City Centre'},
+  {e:'🌳',l:'Masvingo, Great Zimbabwe'},{e:'⛽',l:'Msasa Industrial Area'},
+  {e:'🏨',l:'Meikles Hotel, Harare CBD'},{e:'🏛️',l:'Parliament Building, Harare'},
+  {e:'🏟️',l:'Rufaro Stadium, Mbare'},{e:'🌾',l:'Marlborough, Harare'},
+];
+let fromVal='',toVal='';
+
+function showSugg(which,val){
+  const box=document.getElementById('sb-'+which);if(!box)return;
+  if(val.length<2){box.classList.remove('open');return;}
+  const hits=ZW_LOCS.filter(l=>l.l.toLowerCase().includes(val.toLowerCase())).slice(0,6);
+  box.innerHTML='';hits.forEach(m=>{
+    const d=document.createElement('div');d.className='sugg-it';
+    d.innerHTML='<span>'+m.e+'</span><span>'+m.l+'</span>';
+    d.onclick=()=>{
+      if(which==='from'){document.getElementById('inp-from').value=m.l;fromVal=m.l;}
+      else{document.getElementById('inp-to').value=m.l;toVal=m.l;updateMapTo(m.l);}
+      box.classList.remove('open');
+    };
+    box.appendChild(d);
+  });
+  box.classList.toggle('open',hits.length>0);
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.bk-form')&&!e.target.closest('.sugg-box'))
+    document.querySelectorAll('.sugg-box').forEach(b=>b.classList.remove('open'));
+});
+
+function setFrom(v){document.getElementById('inp-from').value=v;fromVal=v;toast('📍 Pickup: '+v.split(',')[0]);}
+function setTo(v){document.getElementById('inp-to').value=v;toVal=v;updateMapTo(v);toast('🏁 Destination: '+v.split(',')[0]);}
+
+function updateMapTo(dest){
+  document.getElementById('from-preview').textContent='📍 '+(fromVal?fromVal.split(',')[0]:'Pickup');
+}
+function useGPS(){
+  navigator.geolocation?.getCurrentPosition(
+    p=>{const v=p.coords.latitude.toFixed(5)+'°S, '+Math.abs(p.coords.longitude).toFixed(5)+'°E';document.getElementById('inp-from').value=v;fromVal=v;toast('✅ GPS: '+v.split(',')[0]);},
+    ()=>{document.getElementById('inp-from').value='Harare CBD (-17.8249, 31.0530)';fromVal='Harare CBD';}
+  );
+}
+
+function nextStep(dest){
+  const fi=document.getElementById('inp-from'),ti=document.getElementById('inp-to');
+  if(dest==='pg-destination'){if(!fi?.value.trim()){toast('⚠️ Enter a pickup location');return;}fromVal=fi.value;}
+  if(dest==='pg-fare'){if(!ti?.value.trim()){toast('⚠️ Enter a destination');return;}toVal=ti.value;}
+  go(dest,'');
+}
+
+function qkBook(place){fromVal='Current Location, Harare';toVal=place;go('pg-fare','bn-ride');buildFarePage();}
+
+// ── VEHICLES ──
+const VEHICLES=[
+  {e:'🛴',n:'eScooter',p:3,r:'$1.5/km',t:'2 min'},
+  {e:'🚲',n:'eBike',p:5,r:'$2/km',t:'3 min'},
+  {e:'🚗',n:'eCar',p:12,r:'$4/km',t:'4 min'},
+  {e:'🚐',n:'Kombi XL',p:16,r:'$5.5/km',t:'5 min'},
+  {e:'🚌',n:'eBus',p:2,r:'$1/km',t:'8 min'},
+  {e:'📦',n:'Courier',p:8,r:'$3/km',t:'6 min'},
+];
+let selV=2,curFare=12;
+
+function buildFarePage(){
+  const g=document.getElementById('veh-grid');if(!g)return;
+  g.innerHTML='';
+  VEHICLES.forEach((v,i)=>{
+    const d=document.createElement('div');d.className='vc'+(i===selV?' on':'');
+    d.innerHTML=`<div class="vc-icon">${v.e}</div><div class="vc-name">${v.n}</div><div class="vc-rate">${v.r}</div><div class="vc-eta">⏱ ${v.t}</div>`;
+    d.onclick=()=>{document.querySelectorAll('.vc').forEach(c=>c.classList.remove('on'));d.classList.add('on');selV=i;syncFare(VEHICLES[i].p);};
+    g.appendChild(d);
+  });
+  const dist=(Math.random()*18+3).toFixed(1);
+  document.getElementById('ts-dist').textContent=dist+' km';
+  document.getElementById('ts-eta').textContent='~'+Math.round(dist/.65)+' min';
+  document.getElementById('ts-co2').textContent='$'+(dist*.21).toFixed(2);
+  syncFare(VEHICLES[selV].p);
+}
+function adjFare(d){curFare=Math.max(2,Math.min(100,curFare+d));syncFare(curFare);}
+function syncFare(v){
+  curFare=parseInt(v);
+  document.getElementById('fare-display').textContent='$'+curFare;
+  document.getElementById('fare-range').value=curFare;
+  document.getElementById('srch-offer').textContent='OFFER: $'+curFare+' · '+VEHICLES[selV].n.toUpperCase();
+}
+
+// ── DRIVER SEARCH ──
+let searchIv;
+const DRV_POOL=[
+  {n:'Tafadzwa M.',e:'👨‍💼',v:'Toyota Vitz',r:'4.9★'},{n:'Chiedza P.',e:'👩‍💼',v:'Honda Fit',r:'4.8★'},
+  {n:'Munashe K.',e:'👨',v:'Toyota Corolla',r:'5.0★'},{n:'Rutendo D.',e:'👩‍🦱',v:'Suzuki Alto',r:'4.7★'},
+];
+let activeDrv={};
+
+function startSearch(){
+  document.getElementById('offer-cards').innerHTML='';
+  document.getElementById('srch-timer').textContent='0:00';
+  document.getElementById('srch-status').textContent='Broadcasting to 9 nearby drivers in Harare…';
+  clearInterval(searchIv);
+  const msgs=['Broadcasting to 9 nearby drivers in Harare…','5 drivers reviewing your offer…','Getting responses…','🎉 Match found!'];
+  let s=0,mI=0;
+  searchIv=setInterval(()=>{
+    s++;const m=Math.floor(s/60),sec=s%60;
+    document.getElementById('srch-timer').textContent=m+':'+sec.toString().padStart(2,'0');
+    if(s%5===0&&mI<msgs.length-1){mI++;document.getElementById('srch-status').textContent=msgs[mI];}
+    if(s===16){clearInterval(searchIv);showOfferCards();}
+  },1000);
+}
+
+function showOfferCards(){
+  const box=document.getElementById('offer-cards');box.innerHTML='';
+  const cnt=2+Math.floor(Math.random()*2);
+  for(let i=0;i<cnt;i++){
+    const d=DRV_POOL[i%DRV_POOL.length];
+    const fare=Math.round(curFare*(0.92+Math.random()*.2));
+    const eta=2+Math.floor(Math.random()*6);
+    const c=document.createElement('div');c.className='offer-card';
+    c.innerHTML=`<div class="oc-avatar">${d.e}</div>
+      <div class="oc-info"><div class="oc-name">${d.n}</div><div class="oc-veh">${d.v} · ${d.r}</div><div class="oc-eta">~${eta} min away</div></div>
+      <div class="oc-fare">$${fare}</div>
+      <button class="oc-accept" onclick="acceptRide('${d.n}','${d.e}','${d.v}',${fare},${eta})">Accept</button>`;
+    box.appendChild(c);
+  }
+}
+
+function acceptRide(name,icon,veh,fare,eta){
+  clearInterval(searchIv);
+  activeDrv={name,icon,veh,fare,eta};
+  const id='QR-'+Math.random().toString(36).substr(2,6).toUpperCase();
+  document.getElementById('conf-sub').textContent=icon+' '+name+' is heading to your pickup!';
+  document.getElementById('conf-det').innerHTML=`
+    <div>🆔 Ride: <span>${id}</span></div>
+    <div>📍 From: <span>${(fromVal||'Harare CBD').substring(0,30)}</span></div>
+    <div>🏁 To: <span>${(toVal||'Destination').substring(0,30)}</span></div>
+    <div>${VEHICLES[selV].e} Vehicle: <span>${name} · ${veh}</span></div>
+    <div>💰 Fare: <span>$${fare}</span></div>
+    <div>⏱ ETA: <span>~${eta} min</span></div>`;
+  document.getElementById('conf-modal').classList.add('on');
+  // Driver calls after 3 seconds
+  setTimeout(()=>{
+    document.getElementById('c-name').textContent=name;
+    document.getElementById('c-av').textContent=icon;
+    document.getElementById('call-modal').classList.add('on');
+  },3000);
+}
+
+function closeConf(){
+  document.getElementById('conf-modal').classList.remove('on');
+  document.getElementById('rc-name').textContent=activeDrv.name||'Driver';
+  document.getElementById('rc-av').textContent=activeDrv.icon||'👨‍💼';
+  document.getElementById('rc-veh').textContent='🚗 '+(activeDrv.veh||'Toyota Vitz')+' · ABC 1234';
+  document.getElementById('rc-from').textContent=(fromVal||'Pickup').split(',')[0];
+  document.getElementById('rc-to').textContent=(toVal||'Destination').split(',')[0];
+  document.getElementById('rc-eta').textContent=activeDrv.eta||4;
+  go('pg-riding','');
+}
+
+// ── RIDING MAP — Driver moves toward pickup ──
+let rideIv;
+function initRidingMap(){
+  const cnv=document.getElementById('ride-canvas');if(!cnv)return;
+  const wrap=document.getElementById('ride-map-wrap');
+  cnv.width=wrap.offsetWidth;cnv.height=wrap.offsetHeight;
+  drawRideMapBase(cnv);
+  clearInterval(rideIv);
+  let drvX=12,drvY=14,prog=0;
+  const progEl=document.getElementById('rc-prog'),etaEl=document.getElementById('rc-eta');
+  rideIv=setInterval(()=>{
+    prog+=3.5;if(prog>=100){clearInterval(rideIv);prog=100;etaEl.textContent='0';toast('🚗 '+activeDrv.name+' has arrived at your pickup!');}
+    else etaEl.textContent=Math.max(0,Math.round((100-prog)/25));
+    if(progEl)progEl.style.width=prog+'%';
+    drvX+=(50-drvX)*.1;drvY+=(52-drvY)*.1;
+    const cnv2=document.getElementById('ride-canvas');if(!cnv2)return;
+    const wrap2=document.getElementById('ride-map-wrap');
+    cnv2.width=wrap2.offsetWidth;cnv2.height=wrap2.offsetHeight;
+    drawRideMapBase(cnv2);
+    const ctx=cnv2.getContext('2d'),W=cnv2.width,H=cnv2.height;
+    // Route line
+    ctx.strokeStyle='rgba(245,158,11,.65)';ctx.lineWidth=2.5;ctx.setLineDash([5,4]);
+    ctx.beginPath();ctx.moveTo(drvX/100*W,drvY/100*H);ctx.lineTo(W*.5,H*.52-10);ctx.stroke();ctx.setLineDash([]);
+    // Driver car
+    ctx.font='22px serif';ctx.textAlign='center';ctx.fillText('🚗',drvX/100*W,drvY/100*H);
+    // Pickup pin
+    ctx.fillText('📍',W*.5,H*.52-8);
+  },1200);
+}
+
+function drawRideMapBase(cnv){
+  const ctx=cnv.getContext('2d'),W=cnv.width,H=cnv.height;
+  ctx.fillStyle='#e8f5e9';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#fff';ctx.lineWidth=7;
+  [H*.3,H*.55,H*.75].forEach(y=>{ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();});
+  [W*.22,W*.48,W*.72].forEach(x=>{ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();});
+  ctx.strokeStyle='rgba(245,158,11,.22)';ctx.lineWidth=11;
+  ctx.beginPath();ctx.moveTo(0,H/2);ctx.lineTo(W,H/2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
+  [[8,8,58,38],[78,6,52,34],[148,9,62,40],[220,6,68,38],[W-88,8,70,36],
+   [5,H*.38,60,34],[95,H*.36,65,38],[188,H*.4,58,32],[W-80,H*.38,68,34]].forEach(b=>{
+    ctx.fillStyle='#c8d8c0';ctx.strokeStyle='rgba(0,0,0,.05)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.roundRect(b[0],b[1],b[2],b[3],3);ctx.fill();ctx.stroke();
+  });
+  ctx.font='bold 10px JetBrains Mono,monospace';ctx.fillStyle='rgba(34,197,94,.5)';
+  ctx.textAlign='right';ctx.fillText('HARARE · LIVE MAP',W-10,H-8);
+}
+
+// ── CALL ──
+function openCall(){document.getElementById('call-modal').classList.add('on');}
+function answerCall(){document.getElementById('call-modal').classList.remove('on');toast('📞 Connected to '+activeDrv.name+' · Masked number · Zimbabwe');setTimeout(()=>toast('🔚 Call ended (0:38)'),5500);}
+function endCall(){document.getElementById('call-modal').classList.remove('on');toast('📵 Call declined');}
+
+// ── NOTIFICATIONS ──
+const NOTIFS=[
+  {i:'🚗',t:'Tafadzwa accepted your ride',m:'He is 4 min away. Toyota Vitz ABC 1234. GPS tracking active.',time:'Just now',u:true},
+  {i:'📞',t:'Driver called you',m:'Tafadzwa M. called to confirm exact pickup at Samora Machel Ave intersection.',time:'2 min ago',u:true},
+  {i:'💰',t:'Fare offer matched — $14',m:'Your offer was accepted! Driver is heading to pickup.',time:'4 min ago',u:true},
+  {i:'⭐',t:'Rate your last trip',m:'How was your ride with Chiedza P.? Your feedback helps.',time:'1 hr ago',u:false},
+  {i:'🛡️',t:'Safety check-in',m:'Your trip has been shared with your trusted contact list.',time:'2 hrs ago',u:false},
+  {i:'🎁',t:'Earned 80 ride points!',m:'Complete 2 more trips to unlock Gold status in Zimbabwe.',time:'Yesterday',u:false},
+];
+
+function renderNotifs(){
+  const list=document.getElementById('notif-list');if(!list)return;
+  list.innerHTML='';
+  NOTIFS.forEach(n=>{
+    const d=document.createElement('div');d.className='notif-it'+(n.u?' unread':'');
+    d.innerHTML=`<div class="ni-ico">${n.i}</div><div class="ni-b"><div class="ni-title">${n.t}</div><div class="ni-msg">${n.m}</div><div class="ni-time">${n.time}</div></div>`;
+    list.appendChild(d);
+  });
+}
+
+function clearAllNotifs(){
+  NOTIFS.forEach(n=>n.u=false);
+  document.getElementById('home-nb-cnt').textContent='0';
+  document.getElementById('acc-nb-cnt').textContent='0';
+  document.getElementById('bn-dot').style.display='none';
+  renderNotifs();toast('✅ All notifications cleared');
+}
+
+// ── SAFETY ──
+function toggleSf(key){
+  const el=document.getElementById('sf-'+key);if(!el)return;
+  el.classList.toggle('on');
+  toast((el.classList.contains('on')?'✅':'❌')+' Live location sharing '+(el.classList.contains('on')?'on':'off'));
+}
+function callSOS(){toast('🆘 SOS ACTIVATED — Alerting Zimbabwe Police + emergency contacts!');}
+
+// ── LANGUAGES ──
+const LANGS=[
+  {f:'🇿🇼',n:'Shona',e:'Shona'},{f:'🇿🇼',n:'Ndebele',e:'Ndebele'},{f:'🇬🇧',n:'English',e:'English'},
+  {f:'🇿🇦',n:'Zulu',e:'Zulu'},{f:'🇿🇦',n:'Xhosa',e:'Xhosa'},{f:'🇿🇦',n:'Afrikaans',e:'Afrikaans'},
+  {f:'🇧🇼',n:'Setswana',e:'Tswana'},{f:'🇲🇿',n:'Português',e:'Portuguese'},{f:'🇫🇷',n:'Français',e:'French'},
+  {f:'🇩🇪',n:'Deutsch',e:'German'},{f:'🇪🇸',n:'Español',e:'Spanish'},{f:'🇸🇦',n:'العربية',e:'Arabic'},
+  {f:'🇨🇳',n:'中文',e:'Chinese'},{f:'🇷🇺',n:'Русский',e:'Russian'},{f:'🇯🇵',n:'日本語',e:'Japanese'},
+  {f:'🇰🇷',n:'한국어',e:'Korean'},{f:'🇮🇳',n:'हिन्दी',e:'Hindi'},{f:'🇧🇩',n:'বাংলা',e:'Bengali'},
+  {f:'🇵🇰',n:'اردو',e:'Urdu'},{f:'🇮🇩',n:'Bahasa Indonesia',e:'Indonesian'},{f:'🇵🇭',n:'Filipino',e:'Filipino'},
+  {f:'🇻🇳',n:'Tiếng Việt',e:'Vietnamese'},{f:'🇹🇭',n:'ภาษาไทย',e:'Thai'},{f:'🇲🇾',n:'Bahasa Melayu',e:'Malay'},
+  {f:'🇺🇦',n:'Українська',e:'Ukrainian'},{f:'🇵🇱',n:'Polski',e:'Polish'},{f:'🇷🇴',n:'Română',e:'Romanian'},
+  {f:'🇸🇪',n:'Svenska',e:'Swedish'},{f:'🇳🇴',n:'Norsk',e:'Norwegian'},{f:'🇩🇰',n:'Dansk',e:'Danish'},
+  {f:'🇫🇮',n:'Suomi',e:'Finnish'},{f:'🇳🇱',n:'Nederlands',e:'Dutch'},{f:'🇮🇹',n:'Italiano',e:'Italian'},
+  {f:'🇬🇷',n:'Ελληνικά',e:'Greek'},{f:'🇹🇷',n:'Türkçe',e:'Turkish'},{f:'🇮🇱',n:'עברית',e:'Hebrew'},
+  {f:'🇮🇷',n:'فارسی',e:'Persian'},{f:'🇪🇹',n:'አማርኛ',e:'Amharic'},{f:'🇰🇪',n:'Kiswahili',e:'Swahili'},
+  {f:'🇳🇬',n:'Hausa',e:'Hausa'},{f:'🇳🇬',n:'Yoruba',e:'Yoruba'},{f:'🇳🇬',n:'Igbo',e:'Igbo'},
+  {f:'🇬🇭',n:'Twi',e:'Akan/Twi'},{f:'🇸🇳',n:'Wolof',e:'Wolof'},{f:'🇲🇱',n:'Bambara',e:'Bambara'},
+  {f:'🇨🇿',n:'Čeština',e:'Czech'},{f:'🇸🇰',n:'Slovenčina',e:'Slovak'},{f:'🇭🇺',n:'Magyar',e:'Hungarian'},
+  {f:'🇧🇬',n:'Български',e:'Bulgarian'},{f:'🇷🇸',n:'Српски',e:'Serbian'},{f:'🇭🇷',n:'Hrvatski',e:'Croatian'},
+  {f:'🇸🇮',n:'Slovenščina',e:'Slovenian'},{f:'🇱🇹',n:'Lietuvių',e:'Lithuanian'},{f:'🇱🇻',n:'Latviešu',e:'Latvian'},
+  {f:'🇪🇪',n:'Eesti',e:'Estonian'},{f:'🇬🇪',n:'ქართული',e:'Georgian'},{f:'🇦🇲',n:'Հայերեն',e:'Armenian'},
+  {f:'🇦🇿',n:'Azərbaycan',e:'Azerbaijani'},{f:'🇰🇿',n:'Қазақша',e:'Kazakh'},{f:'🇺🇿',n:"O'zbek",e:'Uzbek'},
+  {f:'🇲🇳',n:'Монгол',e:'Mongolian'},{f:'🇱🇰',n:'සිංහල',e:'Sinhala'},{f:'🇲🇲',n:'မြန်မာ',e:'Burmese'},
+  {f:'🇰🇭',n:'ខ្មែរ',e:'Khmer'},{f:'🇮🇸',n:'Íslenska',e:'Icelandic'},{f:'🌍',n:'Esperanto',e:'Esperanto'},
+];
+let curLang='English';
+
+function renderLangs(filter){
+  const list=document.getElementById('lang-list');if(!list)return;
+  const items=filter?LANGS.filter(l=>l.e.toLowerCase().includes(filter.toLowerCase())||l.n.toLowerCase().includes(filter.toLowerCase())):LANGS;
+  list.innerHTML='';
+  items.forEach(l=>{
+    const d=document.createElement('div');d.className='lang-row'+(l.e===curLang?' sel':'');
+    d.innerHTML=`<span class="lr-flag">${l.f}</span><div><div class="lr-nat">${l.n}</div><div class="lr-en">${l.e}</div></div>${l.e===curLang?'<span class="lr-chk">✓</span>':''}`;
+    d.onclick=()=>{curLang=l.e;document.getElementById('s-lang-val').textContent=l.e;renderLangs(filter);toast('🌐 Language: '+l.e);};
+    list.appendChild(d);
+  });
+}
+function filterLang(v){renderLangs(v);}
+
+// ── UNITS ──
+function selUnit(u,el){
+  document.querySelectorAll('.unit-opt').forEach(o=>o.classList.remove('sel'));
+  document.querySelectorAll('.uo-radio').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');document.getElementById('ur-'+u).classList.add('sel');
+  const lbl=u==='km'?'Kilometers (km)':'Miles (mi)';
+  document.getElementById('s-unit-val').textContent=lbl;
+  document.getElementById('unit-preview').textContent='Distance: '+(u==='km'?'12.4 km':'7.7 mi')+' · ETA: ~22 min · Fare: $12';
+  toast('📏 Units: '+lbl);
+}
+
+// ── APPEARANCE ──
+function selAppear(name,el){
+  document.querySelectorAll('.ap-opt').forEach(o=>{o.classList.remove('sel');o.querySelector('.ap-radio')?.classList.remove('sel');});
+  el.classList.add('sel');el.querySelector('.ap-radio')?.classList.add('sel');
+  document.getElementById('s-ap-val').textContent=name;
+  toast('🎨 Appearance: '+name);
+}
+
+// ── LEGAL ──
+const LEGAL={
+  terms:'Terms of Service\n\nBy using QuantumRide Hub in Zimbabwe you agree to these terms. All rides are contracted between the driver and rider. QuantumRide acts as a marketplace only.\n\nUpdated March 1, 2026 · v5.158.0',
+  privacy:'Privacy Policy\n\nWe collect GPS coordinates, trip history, and payment data to operate the platform. Compliant with Zimbabwe Data Protection Act 2021. Request data deletion any time.',
+  cookie:'Cookie Policy\n\nEssential cookies for authentication and security. Optional analytics cookies. You may opt-out in Settings.',
+  driver:'Driver Agreement\n\nDrivers are independent contractors. QuantumRide takes 18% commission. Required: 4.0★+ rating, valid licence, insured vehicle. Zero tolerance for unsafe behaviour.',
+  zdpa:'Zimbabwe Data Protection Act 2021\n\nUnder ZW DPA 2021, you have rights to access, correct, and delete your personal data held by QuantumRide. Contact dpa@quantumride.co.zw.',
+  oss:'Open Source Licenses\n\nSocket.io (MIT) · Redis (BSD) · Node.js (MIT) · PostgreSQL (PostgreSQL License) · PostGIS (GPL v2) · Mapbox GL JS (Mapbox ToS) · OpenStreetMap (ODbL)',
+};
+function showLegal(key){openModal('📄 Legal',LEGAL[key]||'Document not found.',[{l:'Close',c:'sec',fn:closeModal}]);}
+
+// ── HELP / FAQ ──
+// ── SUPPORT CHAT ──
+const BOT={
+  'ride issue':"I'll look into that straight away! Please share your Trip ID (e.g. QR-ABC123) and I'll escalate to our Harare team immediately.",
+  'payment problem':"We support EcoCash, Mukuru, Paynow, and USD cash in Zimbabwe. Which payment method is giving you trouble?",
+  'driver complaint':"We take all driver reports seriously. Please share the driver name or Trip ID. Our Zimbabwe team reviews within 2 hours.",
+  'lost item':"Sorry to hear that! Please share your Trip ID and we'll contact the driver to locate your item. Most items are recovered within 4 hours.",
+  'account help':"I can help with login, profile, or billing issues. What do you need?",
+};
+
+function sendSugg(btn){
+  const t=btn.textContent;btn.closest('.chat-suggs')?.remove();
+  appendMsg(t,'usr');setTimeout(()=>appendMsg(BOT[t.toLowerCase()]||'Thanks for contacting QuantumRide Zimbabwe support! Ticket #ZW-'+Math.floor(Math.random()*9999)+' created. Response in 15 minutes.','bot'),800);
+}
+function sendChat(){
+  const inp=document.getElementById('chat-inp');const m=inp.value.trim();if(!m)return;
+  inp.value='';appendMsg(m,'usr');setTimeout(()=>appendMsg('Thanks for your message. Your support ticket has been created. A Zimbabwe support agent will respond within 15 minutes.','bot'),900);
+}
+function appendMsg(txt,role){
+  const b=document.getElementById('chat-body');
+  const n=new Date(),time=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
+  const d=document.createElement('div');d.className='cm '+role;
+  d.innerHTML=`<div class="cm-b">${txt}</div><div class="cm-t">${time}</div>`;
+  b.appendChild(d);b.scrollTop=b.scrollHeight;
+}
+
+// ── DRIVER MODE ──
+let drvOnline=false,drvGpsIv;
+
+function initDriverPage(){
+  buildArchDocs();
+  simDriverGPS();
+}
+
+function toggleDriverOnline(){
+  drvOnline=!drvOnline;
+  const tog=document.getElementById('big-tog');tog.classList.toggle('on',drvOnline);
+  const st=document.getElementById('drv-st-lbl');st.textContent=drvOnline?'ONLINE':'OFFLINE';st.className='dh-st'+(drvOnline?' on':'');
+  const ws=document.getElementById('ws-st');ws.textContent=drvOnline?'● Connected':'● Disconnected';ws.className='gv '+(drvOnline?'on':'off');
+  if(drvOnline){toast('✅ ONLINE — Broadcasting to riders in Harare');simDriverGPS();setTimeout(triggerIncoming,6000);}
+  else{clearInterval(drvGpsIv);document.getElementById('incoming-req').classList.remove('on');toast('⏸ OFFLINE');}
+}
+
+function simDriverGPS(){
+  let lat=-17.8249,lng=31.0530;
+  clearInterval(drvGpsIv);
+  drvGpsIv=setInterval(()=>{
+    if(drvOnline){lat+=(Math.random()-.5)*.0008;lng+=(Math.random()-.5)*.0008;}
+    document.getElementById('gps-lat').textContent=lat.toFixed(6);
+    document.getElementById('gps-lng').textContent=lng.toFixed(6);
+    document.getElementById('gps-spd').textContent=(drvOnline?Math.floor(Math.random()*50+10):0)+' km/h';
+  },3000);
+}
+
+function triggerIncoming(){
+  if(!drvOnline)return;
+  const reqs=[
+    {f:'Borrowdale, Harare',t:'Robert Mugabe Airport',p:22},
+    {f:'Harare CBD',t:'Eastgate Mall',p:12},
+    {f:'Avondale, Harare',t:'UZ Campus',p:9},
+    {f:'Mbare, Harare',t:'Bulawayo Rd',p:18},
+  ];
+  const req=reqs[Math.floor(Math.random()*reqs.length)];
+  document.getElementById('inc-from').textContent='📍 '+req.f;
+  document.getElementById('inc-to').textContent='🏁 '+req.t;
+  document.getElementById('inc-offer').textContent='Offer: $'+req.p;
+  document.getElementById('incoming-req').classList.add('on');
+  const fill=document.getElementById('inc-fill');
+  let pct=100;
+  const iv=setInterval(()=>{pct-=4;if(fill)fill.style.width=pct+'%';if(pct<=0){clearInterval(iv);document.getElementById('incoming-req').classList.remove('on');}},1000);
+}
+
+function drvAccept(){document.getElementById('incoming-req').classList.remove('on');toast('✅ Ride accepted! Navigate to pickup — GPS tracking active.');}
+function drvDecline(){document.getElementById('incoming-req').classList.remove('on');toast('❌ Ride declined');}
+
+// ── ARCHITECTURE DOCS ──
+function buildArchDocs(){
+  const box=document.getElementById('arch-docs');if(!box)return;
+  box.innerHTML=`
+<div class="arch-ttl">📡 1. GPS FROM DRIVER PHONE — HARARE</div>
+<div class="arch-code">// React Native / Flutter — Driver App
+navigator.geolocation.watchPosition((pos) => {
+  const payload = {
+    driverId: 'DRV_ZW_582',
+    lat: pos.coords.latitude,    // e.g. -17.8249
+    lng: pos.coords.longitude,   // e.g. 31.0530
+    speed: pos.coords.speed,     // km/h
+    heading: pos.coords.heading, // degrees
+    city: 'Harare',
+    timestamp: Date.now(),
+  };
+  // Emit via WebSocket every 3 seconds
+  socket.emit('driver:location', payload);
+}, { enableHighAccuracy: true, maximumAge: 3000 });</div>
+
+<div class="arch-ttl">🌐 2. NODE.JS + SOCKET.IO BACKEND</div>
+<div class="arch-code">// Node.js server — Zimbabwe backend
+const io = require('socket.io')(server);
+const redis = require('redis').createClient();
+const db = require('./db'); // PostgreSQL + PostGIS
+
+io.on('connection', (socket) => {
+  socket.on('driver:location', async (data) => {
+    // 1. Cache position in Redis (30s TTL)
+    await redis.setex(
+      \`driver:\${data.driverId}\`, 30,
+      JSON.stringify(data)
+    );
+    // 2. Persist to PostgreSQL for audit
+    await db.query(
+      'INSERT INTO gps_log(driver_id,lat,lng,speed,ts) VALUES($1,$2,$3,$4,$5)',
+      [data.driverId, data.lat, data.lng, data.speed, data.timestamp]
+    );
+    // 3. Broadcast to nearby riders in Harare
+    io.to('zone:harare_central').emit('drivers:update', {
+      id: data.driverId, lat: data.lat, lng: data.lng,
+    });
+  });
+});</div>
+
+<div class="arch-ttl">🗺️ 3. ANIMATE CAR MARKER — SMOOTH GPS</div>
+<div class="arch-code">// Frontend animation — inDrive style
+socket.on('drivers:update', ({ id, lat, lng }) => {
+  const marker = driverMarkers[id];
+  const oldPos = marker.getPosition();
+  animateMarker(marker, oldPos, { lat, lng }, 2500);
+});
+
+function animateMarker(marker, from, to, duration) {
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    // Ease in-out
+    const ease = t<.5 ? 2*t*t : -1+(4-2*t)*t;
+    marker.setPosition({
+      lat: from.lat + (to.lat - from.lat) * ease,
+      lng: from.lng + (to.lng - from.lng) * ease,
+    });
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}</div>
+
+<div class="arch-ttl">🏗️ 4. FULL SYSTEM STACK</div>
+<div class="arch-code">📱 Driver Phone (Harare) → GPS watchPosition
+       ↓  WebSocket emit every 3 seconds
+🌐  Node.js + Socket.io Load Balancer
+     ├─ 🔴 Redis  → Live positions (TTL 30s)
+     ├─ 🐘 PostgreSQL + PostGIS
+     │   └─ ST_DWithin(5 km radius query)
+     └─ 📡 Broadcast → 'zone:harare_central'
+              ↓  WebSocket receive
+📱 Rider App → Google Maps Zimbabwe API
+     └─ Smooth marker animation (2.5s ease)</div>
+
+<div class="arch-ttl">🔍 5. POSTGIS QUERY — FIND DRIVERS NEAR HARARE</div>
+<div class="arch-code">-- Find drivers within 5km of Harare CBD
+SELECT driver_id, lat, lng,
+  ST_Distance(
+    ST_MakePoint(lng, lat)::geography,
+    ST_MakePoint(31.0530, -17.8249)::geography
+  ) AS metres
+FROM active_drivers
+WHERE ST_DWithin(
+  ST_MakePoint(lng, lat)::geography,
+  ST_MakePoint(31.0530, -17.8249)::geography,
+  5000   -- 5 kilometre radius
+)
+ORDER BY metres LIMIT 10;</div>
+
+<div style="margin-top:8px">
+  <span class="arch-tag">Node.js</span><span class="arch-tag">Socket.io</span>
+  <span class="arch-tag">Redis</span><span class="arch-tag">PostgreSQL</span>
+  <span class="arch-tag">PostGIS</span><span class="arch-tag">Google Maps ZW</span>
+  <span class="arch-tag">Mapbox</span><span class="arch-tag">Firebase</span>
+</div>`;
+}
+
+// ── ACCOUNT ──
+function editProfile(){
+  openModal('✏️ Edit Profile',
+    '<input id="ep-n" style="width:100%;padding:9px;border:1.5px solid var(--rim);border-radius:8px;font-size:13px;margin-bottom:7px;font-family:Nunito,sans-serif;outline:none" value="Alex Moyo" onfocus="this.style.borderColor=\'var(--amber)\'" onblur="this.style.borderColor=\'var(--rim)\'"/><input id="ep-e" style="width:100%;padding:9px;border:1.5px solid var(--rim);border-radius:8px;font-size:13px;font-family:Nunito,sans-serif;outline:none" value="alex.moyo@gmail.com" onfocus="this.style.borderColor=\'var(--amber)\'" onblur="this.style.borderColor=\'var(--rim)\'"/>',
+    [{l:'Save',c:'prim',fn:()=>{
+      const n=document.getElementById('ep-n')?.value;
+      const e=document.getElementById('ep-e')?.value;
+      if(n)document.getElementById('acc-name').textContent=n;
+      if(e)document.getElementById('acc-email').textContent=e;
+      closeModal();toast('✅ Profile updated!');
+    }},{l:'Cancel',c:'sec',fn:closeModal}]);
+}
+
+function confirmLogout(){openModal('🚪 Log Out','Are you sure you want to log out of QuantumRide Hub Zimbabwe?',[{l:'Log Out',c:'danger',fn:()=>{closeModal();go('pg-splash','');toast('👋 Logged out. See you soon!');}},{l:'Cancel',c:'sec',fn:closeModal}]);}
+function confirmDelete(){openModal('🗑️ Delete Account','This permanently deletes your account, all trip history, and personal data from Zimbabwe servers. This action cannot be undone.',[{l:'Delete Forever',c:'danger',fn:()=>{closeModal();toast('⚠️ Account deletion scheduled for 30 days per ZW DPA 2021.');}},{l:'Cancel',c:'sec',fn:closeModal}]);}
+
+// ── MODAL ──
+function openModal(title,body,actions){
+  document.getElementById('mb-ttl').textContent=title;
+  document.getElementById('mb-body').innerHTML=body;
+  const acts=document.getElementById('mb-acts');acts.innerHTML='';
+  actions.forEach(a=>{
+    const b=document.createElement('button');b.className='mba '+a.c;b.textContent=a.l;b.onclick=a.fn;acts.appendChild(b);
+  });
+  document.getElementById('modal-bg').classList.add('on');
+}
+function closeModal(){document.getElementById('modal-bg').classList.remove('on');}
+
+// ── TOAST ──
+function toast(msg){
+  const t=document.getElementById('toast-el');t.textContent=msg;t.classList.add('on');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),3200);
+}
+
+// ── INIT ──
+window.addEventListener('load',()=>{drawMapbox();drawPickupMiniMap();});
+window.addEventListener('resize',()=>{drawMapbox();placeCarMarkers();});
+</script>
+</body>
+</html>

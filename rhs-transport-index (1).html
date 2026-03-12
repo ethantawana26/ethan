@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RHS Transport – Zimbabwe's Smart Ride Platform</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&libraries=places&callback=initMap" async defer></script>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash" class="splash-screen">
+  <div class="splash-content">
+    <div class="logo-wrapper">
+      <div class="logo-icon">
+        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="40" fill="#1a7a3f"/>
+          <path d="M20 50 Q30 30 40 35 Q50 40 60 25" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="40" cy="40" r="8" fill="#fff" opacity="0.9"/>
+          <path d="M36 40 L38 43 L44 37" stroke="#1a7a3f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M25 55 L30 48 L35 52 L40 45 L45 49 L55 42" stroke="#7ed957" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-rhs">RHS</span>
+        <span class="logo-transport">TRANSPORT</span>
+        <span class="logo-tagline">Zimbabwe's Green Ride Platform</span>
+      </div>
+    </div>
+    <div class="splash-spinner"></div>
+  </div>
+</div>
+
+<!-- LOGIN / REGISTER SCREEN -->
+<div id="auth-screen" class="screen hidden">
+  <div class="auth-bg">
+    <div class="auth-map-overlay"></div>
+    <div class="auth-dots"></div>
+  </div>
+  <div class="auth-container">
+    <div class="auth-logo-mini">
+      <svg viewBox="0 0 50 50" fill="none">
+        <circle cx="25" cy="25" r="25" fill="#1a7a3f"/>
+        <path d="M12 32 Q20 18 25 22 Q30 26 38 15" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle cx="25" cy="25" r="5" fill="#fff"/>
+      </svg>
+      <span>RHS TRANSPORT</span>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="showAuthTab('login')">Login</button>
+      <button class="auth-tab" onclick="showAuthTab('register')">Register</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="login-form" class="auth-form">
+      <h2>Welcome Back</h2>
+      <p class="auth-sub">Sign in to your RHS account</p>
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="login-email" placeholder="Email address"/>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="login-password" placeholder="Password"/>
+        <i class="fas fa-eye toggle-pw" onclick="togglePw('login-password')"></i>
+      </div>
+      <div class="auth-options">
+        <label><input type="checkbox" id="remember-me"/> Remember me</label>
+        <a href="#" class="forgot-link">Forgot Password?</a>
+      </div>
+      <button class="btn-primary" onclick="handleLogin()">Login</button>
+      <div class="social-divider"><span>or continue with</span></div>
+      <div class="social-btns">
+        <button class="social-btn google"><i class="fab fa-google"></i> Google</button>
+        <button class="social-btn facebook"><i class="fab fa-facebook"></i> Facebook</button>
+      </div>
+      <div class="partner-login">
+        <p>Login via partner apps:</p>
+        <div class="partner-icons">
+          <a href="https://indrive.com" target="_blank" class="partner-link indrive"><img src="https://logo.clearbit.com/indrive.com" onerror="this.src=''" alt="inDrive"/> inDrive</a>
+          <a href="https://bolt.com" target="_blank" class="partner-link bolt"><img src="https://logo.clearbit.com/bolt.eu" onerror="this.src=''" alt="Bolt"/> Bolt</a>
+          <a href="https://tapandgo.africa" target="_blank" class="partner-link tapgo"><i class="fas fa-credit-card"></i> Tap&Go</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="register-form" class="auth-form hidden">
+      <h2>Create Account</h2>
+      <p class="auth-sub">Join RHS Transport today</p>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="reg-name" placeholder="Full name"/>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-phone"></i>
+        <input type="tel" id="reg-phone" placeholder="+263 7X XXX XXXX"/>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="reg-email" placeholder="Email address"/>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="reg-password" placeholder="Password"/>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-id-card"></i>
+        <select id="reg-type">
+          <option value="passenger">I am a Passenger</option>
+          <option value="driver">I am a Driver</option>
+          <option value="operator">Bus/Kombi Operator</option>
+        </select>
+      </div>
+      <div id="driver-fields" class="driver-extra hidden">
+        <div class="input-group"><i class="fas fa-car"></i><input type="text" placeholder="Vehicle Make & Model"/></div>
+        <div class="input-group"><i class="fas fa-hashtag"></i><input type="text" placeholder="Reg. Number (e.g. ABD 1234)"/></div>
+        <div class="input-group"><i class="fas fa-id-badge"></i><input type="text" placeholder="Driver's License No."/></div>
+      </div>
+      <button class="btn-primary" onclick="handleRegister()">Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="main-app" class="screen hidden">
+
+  <!-- TOP NAV -->
+  <header class="top-bar">
+    <button class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <div class="top-logo">
+      <svg viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="15" fill="#1a7a3f"/><path d="M7 20 Q12 10 15 13 Q18 16 23 8" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="15" cy="15" r="3" fill="#fff"/></svg>
+      RHS Transport
+    </div>
+    <div class="top-right">
+      <div class="zim-time" id="zimTime"></div>
+      <button class="notif-btn" onclick="showNotifications()"><i class="fas fa-bell"></i><span class="badge" id="notifBadge">2</span></button>
+      <div class="avatar" onclick="showScreen('profile-screen')">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="User"/>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar" class="sidebar hidden">
+    <div class="sidebar-header">
+      <div class="sb-avatar">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="User"/>
+        <div>
+          <strong id="sb-name">Ethan Tawana</strong>
+          <span id="sb-email">user@rhs.co.zw</span>
+        </div>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <a href="#" onclick="showScreen('home-screen');toggleSidebar()"><i class="fas fa-home"></i> Home</a>
+      <a href="#" onclick="showScreen('rides-screen');toggleSidebar()"><i class="fas fa-car"></i> Book a Ride</a>
+      <a href="#" onclick="showScreen('fares-screen');toggleSidebar()"><i class="fas fa-bus"></i> Bus Fares</a>
+      <a href="#" onclick="showScreen('map-screen');toggleSidebar()"><i class="fas fa-map-marked-alt"></i> Navigate</a>
+      <a href="#" onclick="showScreen('drivers-screen');toggleSidebar()"><i class="fas fa-id-card"></i> Drivers</a>
+      <a href="#" onclick="showScreen('history-screen');toggleSidebar()"><i class="fas fa-history"></i> History</a>
+      <a href="#" onclick="showScreen('profile-screen');toggleSidebar()"><i class="fas fa-user-circle"></i> Profile</a>
+      <a href="#" onclick="showScreen('support-screen');toggleSidebar()"><i class="fas fa-headset"></i> Support</a>
+      <a href="#" onclick="showQR()"><i class="fas fa-qrcode"></i> App QR Code</a>
+      <a href="#" onclick="logout()" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+    <div class="sb-partners">
+      <p>Partner Platforms</p>
+      <a href="https://indrive.com" target="_blank"><img src="https://logo.clearbit.com/indrive.com" onerror="this.style.display='none'" alt="inDrive"/> inDrive</a>
+      <a href="https://bolt.com" target="_blank"><i class="fas fa-bolt" style="color:#34d186"></i> Bolt</a>
+      <a href="https://tapandgo.africa" target="_blank"><i class="fas fa-credit-card" style="color:#34d186"></i> Tap&Go Africa</a>
+    </div>
+  </div>
+  <div id="sidebar-overlay" class="sidebar-overlay hidden" onclick="toggleSidebar()"></div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button onclick="showScreen('home-screen')" class="nav-btn active" id="nav-home"><i class="fas fa-home"></i><span>Home</span></button>
+    <button onclick="showScreen('rides-screen')" class="nav-btn" id="nav-rides"><i class="fas fa-car"></i><span>Rides</span></button>
+    <button onclick="showScreen('map-screen')" class="nav-btn" id="nav-map"><i class="fas fa-map"></i><span>Map</span></button>
+    <button onclick="showScreen('fares-screen')" class="nav-btn" id="nav-fares"><i class="fas fa-bus"></i><span>Fares</span></button>
+    <button onclick="showScreen('profile-screen')" class="nav-btn" id="nav-profile"><i class="fas fa-user"></i><span>Profile</span></button>
+  </nav>
+
+  <!-- ===== HOME SCREEN ===== -->
+  <div id="home-screen" class="app-screen active">
+    <div class="home-hero">
+      <div class="hero-greeting">
+        <div>
+          <p class="hero-hello">Good Morning, <strong id="hero-name">Ethan</strong> 👋</p>
+          <p class="hero-sub">Where are you going today?</p>
+        </div>
+        <div class="zim-flag">🇿🇼</div>
+      </div>
+      <div class="quick-search">
+        <div class="search-box" onclick="showScreen('rides-screen')">
+          <i class="fas fa-search"></i>
+          <span>Enter pickup location…</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-content">
+      <!-- Quick Actions -->
+      <section class="section-block">
+        <h3 class="section-title">Quick Actions</h3>
+        <div class="quick-actions">
+          <div class="qa-btn" onclick="showScreen('rides-screen')">
+            <div class="qa-icon" style="background:#1a7a3f20"><i class="fas fa-car" style="color:#1a7a3f"></i></div>
+            <span>Book Ride</span>
+          </div>
+          <div class="qa-btn" onclick="showScreen('fares-screen')">
+            <div class="qa-icon" style="background:#f0a50020"><i class="fas fa-bus" style="color:#f0a500"></i></div>
+            <span>Bus Fares</span>
+          </div>
+          <div class="qa-btn" onclick="showScreen('map-screen')">
+            <div class="qa-icon" style="background:#0066cc20"><i class="fas fa-map-marked-alt" style="color:#0066cc"></i></div>
+            <span>Navigate</span>
+          </div>
+          <div class="qa-btn" onclick="window.open('https://indrive.com','_blank')">
+            <div class="qa-icon" style="background:#ff660020"><i class="fas fa-motorcycle" style="color:#ff6600"></i></div>
+            <span>inDrive</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Available Rides -->
+      <section class="section-block">
+        <h3 class="section-title">Available Rides Near You</h3>
+        <div class="rides-scroll">
+          <!-- inDrive Card -->
+          <div class="ride-card indrive-card" onclick="showScreen('rides-screen')">
+            <div class="ride-card-top">
+              <div class="ride-brand"><img src="https://logo.clearbit.com/indrive.com" onerror="this.src=''" alt=""/> inDrive</div>
+              <span class="ride-badge live">Live</span>
+            </div>
+            <div class="ride-card-body">
+              <p>3 drivers near you</p>
+              <p class="ride-eta"><i class="fas fa-clock"></i> ~4 min away</p>
+            </div>
+            <button class="ride-book-btn">Book Now</button>
+          </div>
+          <!-- Bolt Card -->
+          <div class="ride-card bolt-card" onclick="window.open('https://bolt.com','_blank')">
+            <div class="ride-card-top">
+              <div class="ride-brand"><i class="fas fa-bolt" style="color:#34d186"></i> Bolt</div>
+              <span class="ride-badge live">Live</span>
+            </div>
+            <div class="ride-card-body">
+              <p>5 drivers near you</p>
+              <p class="ride-eta"><i class="fas fa-clock"></i> ~6 min away</p>
+            </div>
+            <button class="ride-book-btn">Open Bolt</button>
+          </div>
+          <!-- ZUPCO -->
+          <div class="ride-card zupco-card" onclick="showScreen('fares-screen')">
+            <div class="ride-card-top">
+              <div class="ride-brand"><i class="fas fa-bus"></i> ZUPCO</div>
+              <span class="ride-badge schedule">Scheduled</span>
+            </div>
+            <div class="ride-card-body">
+              <p>Route 4 – City Centre</p>
+              <p class="ride-eta"><i class="fas fa-clock"></i> ~12 min</p>
+            </div>
+            <button class="ride-book-btn">View Routes</button>
+          </div>
+          <!-- Kombi -->
+          <div class="ride-card kombi-card" onclick="showScreen('fares-screen')">
+            <div class="ride-card-top">
+              <div class="ride-brand"><i class="fas fa-shuttle-van"></i> Kombi</div>
+              <span class="ride-badge live">Available</span>
+            </div>
+            <div class="ride-card-body">
+              <p>Harare–Chitungwiza</p>
+              <p class="ride-eta"><i class="fas fa-dollar-sign"></i> $0.50 – $1.00</p>
+            </div>
+            <button class="ride-book-btn">View Fares</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partner Apps -->
+      <section class="section-block">
+        <h3 class="section-title">Partner Platforms</h3>
+        <div class="partners-row">
+          <a href="https://indrive.com" target="_blank" class="partner-card">
+            <img src="https://logo.clearbit.com/indrive.com" onerror="this.innerHTML='iD'" alt="inDrive"/>
+            <span>inDrive</span>
+            <small>Negotiate your fare</small>
+          </a>
+          <a href="https://bolt.com" target="_blank" class="partner-card">
+            <div class="partner-icon-b"><i class="fas fa-bolt"></i></div>
+            <span>Bolt</span>
+            <small>Fast & affordable</small>
+          </a>
+          <a href="https://tapandgo.africa" target="_blank" class="partner-card">
+            <div class="partner-icon-t"><i class="fas fa-credit-card"></i></div>
+            <span>Tap&Go</span>
+            <small>Cashless transit</small>
+          </a>
+        </div>
+      </section>
+
+      <!-- Notice -->
+      <div class="info-notice">
+        <i class="fas fa-leaf"></i>
+        <p>RHS Transport promotes eco-friendly travel. Choose kombis, ZUPCO, or e-bikes to reduce your carbon footprint.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RIDES / BOOKING SCREEN ===== -->
+  <div id="rides-screen" class="app-screen hidden">
+    <div class="screen-header">
+      <h2><i class="fas fa-car"></i> Book a Ride</h2>
+    </div>
+    <div class="screen-content">
+      <div class="booking-card">
+        <h3>Where are you going?</h3>
+        <div class="input-group">
+          <i class="fas fa-map-marker-alt" style="color:#1a7a3f"></i>
+          <input type="text" id="pickup-input" placeholder="Pickup address (e.g. Harare CBD)" class="map-input"/>
+          <button onclick="useMyLocation()" class="loc-btn"><i class="fas fa-crosshairs"></i></button>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-flag-checkered" style="color:#e53935"></i>
+          <input type="text" id="dropoff-input" placeholder="Drop-off address"/>
+        </div>
+
+        <div class="ride-types">
+          <h4>Choose Ride Type</h4>
+          <div class="type-grid">
+            <div class="type-card active" onclick="selectType(this,'taxi')">
+              <i class="fas fa-car"></i>
+              <span>Taxi</span>
+              <small>$2–$5</small>
+            </div>
+            <div class="type-card" onclick="selectType(this,'kombi')">
+              <i class="fas fa-shuttle-van"></i>
+              <span>Kombi</span>
+              <small>$0.50–$1</small>
+            </div>
+            <div class="type-card" onclick="selectType(this,'zupco')">
+              <i class="fas fa-bus"></i>
+              <span>ZUPCO</span>
+              <small>$0.30–$0.80</small>
+            </div>
+            <div class="type-card" onclick="selectType(this,'moto')">
+              <i class="fas fa-motorcycle"></i>
+              <span>Moto</span>
+              <small>$1–$3</small>
+            </div>
+            <div class="type-card" onclick="selectType(this,'ebike')">
+              <i class="fas fa-bicycle"></i>
+              <span>E-Bike</span>
+              <small>$0.50</small>
+            </div>
+            <div class="type-card indrive-type" onclick="window.open('https://indrive.com','_blank')">
+              <img src="https://logo.clearbit.com/indrive.com" onerror="this.src=''" alt="" style="width:24px;height:24px;border-radius:50%"/>
+              <span>inDrive</span>
+              <small>Negotiate</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fare Negotiation (inDrive style) -->
+        <div class="fare-negotiate">
+          <h4>Propose Your Fare (USD)</h4>
+          <div class="fare-slider-row">
+            <span>$1</span>
+            <input type="range" min="1" max="20" value="5" id="fareSlider" oninput="updateFare(this.value)"/>
+            <span>$20</span>
+          </div>
+          <div class="fare-proposed">You propose: <strong id="fareVal">$5.00</strong></div>
+          <p class="fare-note">Drivers can accept, decline, or counter-offer your fare (inDrive style)</p>
+        </div>
+
+        <button class="btn-primary big" onclick="placeOrder()">
+          <i class="fas fa-search-location"></i> Find Driver
+        </button>
+
+        <!-- inDrive Zimbabwe Drivers Section -->
+        <div class="indrive-section">
+          <div class="partner-header">
+            <img src="https://logo.clearbit.com/indrive.com" onerror="this.src=''" alt="" style="width:24px;height:24px;border-radius:50%"/>
+            <h4>inDrive Zimbabwe Drivers</h4>
+            <a href="https://indrive.com" target="_blank" class="link-out"><i class="fas fa-external-link-alt"></i></a>
+          </div>
+          <p class="partner-note">Register as an inDrive driver in Zimbabwe:</p>
+          <a href="https://indrive.com/en-zw/driver/" target="_blank" class="btn-secondary"><i class="fas fa-id-card"></i> Register as inDrive Driver</a>
+          <div class="indrive-drivers" id="indriveDrivers">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAP / NAVIGATION SCREEN ===== -->
+  <div id="map-screen" class="app-screen hidden">
+    <div class="map-top-bar">
+      <div class="input-group map-search">
+        <i class="fas fa-search"></i>
+        <input type="text" id="map-search-input" placeholder="Search location in Zimbabwe…"/>
+      </div>
+    </div>
+    <div id="google-map" class="map-container">
+      <div class="map-placeholder">
+        <div class="map-zim-outline">
+          <!-- Zimbabwe SVG Map -->
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="zim-map-svg">
+            <defs>
+              <radialGradient id="mapBg" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#e8f5e9"/>
+                <stop offset="100%" stop-color="#c8e6c9"/>
+              </radialGradient>
+            </defs>
+            <rect width="400" height="300" fill="#a5d6a7" rx="8"/>
+            <!-- Simplified Zimbabwe border -->
+            <path d="M60,60 L80,40 L140,35 L180,45 L220,35 L270,50 L320,60 L350,90 L360,130 L340,180 L310,220 L280,250 L240,265 L200,260 L160,250 L120,240 L90,210 L65,180 L50,140 L55,100 Z" fill="#2e7d32" opacity="0.3" stroke="#1b5e20" stroke-width="2"/>
+            <!-- Cities -->
+            <circle cx="200" cy="130" r="8" fill="#1a7a3f"/>
+            <text x="210" y="134" fill="#fff" font-size="10" font-weight="bold">Harare</text>
+            <circle cx="150" cy="220" r="6" fill="#f57f17"/>
+            <text x="160" y="224" fill="#fff" font-size="9">Bulawayo</text>
+            <circle cx="240" cy="180" r="5" fill="#1565c0"/>
+            <text x="248" y="184" fill="#fff" font-size="8">Mutare</text>
+            <circle cx="180" cy="175" r="4" fill="#6a1b9a"/>
+            <text x="188" y="179" fill="#fff" font-size="8">Gweru</text>
+            <circle cx="220" cy="150" r="4" fill="#e53935"/>
+            <text x="228" y="154" fill="#fff" font-size="8">Marondera</text>
+            <circle cx="160" cy="155" r="4" fill="#00838f"/>
+            <text x="168" y="159" fill="#fff" font-size="8">Kadoma</text>
+            <!-- GPS pulse -->
+            <circle cx="200" cy="130" r="15" fill="#1a7a3f" opacity="0.2">
+              <animate attributeName="r" from="8" to="25" dur="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" from="0.4" to="0" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Route line -->
+            <path d="M200 130 Q210 155 240 180" stroke="#1a7a3f" stroke-width="3" fill="none" stroke-dasharray="5,3">
+              <animate attributeName="stroke-dashoffset" from="0" to="-100" dur="2s" repeatCount="indefinite"/>
+            </path>
+          </svg>
+        </div>
+        <div class="map-nav-controls">
+          <button onclick="startNavigation()" class="btn-primary"><i class="fas fa-directions"></i> Start Navigation</button>
+          <button onclick="openGoogleMaps()" class="btn-secondary"><i class="fab fa-google"></i> Open Google Maps</button>
+        </div>
+        <div class="map-legend">
+          <div class="legend-item"><span class="dot green"></span> Your Location</div>
+          <div class="legend-item"><span class="dot orange"></span> Destination</div>
+          <div class="legend-item"><span class="dot blue"></span> Route</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-info-bar">
+      <div class="nav-stat"><i class="fas fa-road"></i><div><strong>12.4 km</strong><small>Distance</small></div></div>
+      <div class="nav-stat"><i class="fas fa-clock"></i><div><strong>18 min</strong><small>ETA</small></div></div>
+      <div class="nav-stat"><i class="fas fa-dollar-sign"></i><div><strong>$2.50</strong><small>Est. Fare</small></div></div>
+    </div>
+  </div>
+
+  <!-- ===== FARES SCREEN ===== -->
+  <div id="fares-screen" class="app-screen hidden">
+    <div class="screen-header">
+      <h2><i class="fas fa-bus"></i> Bus Fares – Zimbabwe</h2>
+    </div>
+    <div class="screen-content">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search route or city…" oninput="filterFares(this.value)"/>
+      </div>
+
+      <div class="fare-tabs">
+        <button class="fare-tab active" onclick="filterCategory('all',this)">All</button>
+        <button class="fare-tab" onclick="filterCategory('zupco',this)">ZUPCO</button>
+        <button class="fare-tab" onclick="filterCategory('kombi',this)">Kombi</button>
+        <button class="fare-tab" onclick="filterCategory('intercity',this)">Intercity</button>
+        <button class="fare-tab" onclick="filterCategory('moto',this)">Moto</button>
+      </div>
+
+      <div id="fare-list" class="fare-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DRIVERS SCREEN ===== -->
+  <div id="drivers-screen" class="app-screen hidden">
+    <div class="screen-header">
+      <h2><i class="fas fa-id-card"></i> Available Drivers</h2>
+    </div>
+    <div class="screen-content">
+      <div class="driver-filter">
+        <button class="filter-btn active" onclick="filterDrivers('all',this)">All</button>
+        <button class="filter-btn" onclick="filterDrivers('indrive',this)">inDrive</button>
+        <button class="filter-btn" onclick="filterDrivers('bolt',this)">Bolt</button>
+        <button class="filter-btn" onclick="filterDrivers('rhs',this)">RHS</button>
+      </div>
+      <div id="driver-list" class="driver-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HISTORY SCREEN ===== -->
+  <div id="history-screen" class="app-screen hidden">
+    <div class="screen-header">
+      <h2><i class="fas fa-history"></i> Ride History</h2>
+    </div>
+    <div class="screen-content">
+      <div id="history-list" class="history-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PROFILE SCREEN ===== -->
+  <div id="profile-screen" class="app-screen hidden">
+    <div class="profile-hero">
+      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" class="profile-avatar" alt="User"/>
+      <h2 id="profile-name">Ethan Tawana</h2>
+      <p id="profile-email">ethan@rhs.co.zw</p>
+      <div class="profile-stats">
+        <div><strong id="total-rides">12</strong><small>Rides</small></div>
+        <div><strong>4.9★</strong><small>Rating</small></div>
+        <div><strong>$24.50</strong><small>Spent</small></div>
+      </div>
+    </div>
+    <div class="screen-content">
+      <div class="profile-section">
+        <h3>Account Info</h3>
+        <div class="profile-field"><i class="fas fa-user"></i><div><small>Full Name</small><p id="pf-name">Ethan Tawana</p></div></div>
+        <div class="profile-field"><i class="fas fa-envelope"></i><div><small>Email</small><p id="pf-email">ethan@rhs.co.zw</p></div></div>
+        <div class="profile-field"><i class="fas fa-phone"></i><div><small>Phone</small><p id="pf-phone">+263 77 000 0000</p></div></div>
+        <div class="profile-field"><i class="fas fa-map-marker-alt"></i><div><small>City</small><p>Harare, Zimbabwe</p></div></div>
+      </div>
+      <div class="profile-section">
+        <h3>Last Access</h3>
+        <div class="profile-field"><i class="fas fa-sign-in-alt"></i><div><small>Last Login</small><p id="last-access">–</p></div></div>
+        <div class="profile-field notify-field"><i class="fas fa-bell"></i><div><small>Notifications sent to</small><p>@ethantawana</p></div></div>
+      </div>
+      <div class="profile-section">
+        <h3>Linked Platforms</h3>
+        <div class="linked-apps">
+          <div class="linked-app linked"><img src="https://logo.clearbit.com/indrive.com" onerror="this.src=''" alt=""/> inDrive <span class="linked-badge">Linked</span></div>
+          <div class="linked-app linked"><i class="fas fa-bolt" style="color:#34d186"></i> Bolt <span class="linked-badge">Linked</span></div>
+          <div class="linked-app" onclick="window.open('https://tapandgo.africa','_blank')"><i class="fas fa-credit-card"></i> Tap&Go <span class="linked-badge unlinked">Link</span></div>
+        </div>
+      </div>
+      <button class="btn-danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+
+  <!-- ===== SUPPORT SCREEN ===== -->
+  <div id="support-screen" class="app-screen hidden">
+    <div class="screen-header">
+      <h2><i class="fas fa-headset"></i> Support</h2>
+    </div>
+    <div class="screen-content">
+      <div class="support-card">
+        <h3>RHS Transport Support</h3>
+        <p>We're here 24/7 to help you with your rides across Zimbabwe.</p>
+        <div class="support-contacts">
+          <a href="tel:+2637700000000" class="support-btn call"><i class="fas fa-phone"></i> Call Support</a>
+          <a href="mailto:support@rhstransport.co.zw" class="support-btn email"><i class="fas fa-envelope"></i> Email Us</a>
+          <a href="https://wa.me/2637700000000" target="_blank" class="support-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+      <div class="faq-section">
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>How does fare negotiation work?</span><i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a">You propose a price, and drivers can accept, reject, or counter-offer. This inDrive-style system ensures fairness for both parties.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>How do I register as a driver?</span><i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a">Register in-app under "I am a Driver". Provide your vehicle details and license. For inDrive registration visit indrive.com/en-zw/driver/</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>Which currencies are accepted?</span><i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a">USD (primary) and RTGS/ZiG. Tap&Go supports cashless payments across all routes.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q"><span>What is ZUPCO?</span><i class="fas fa-chevron-down"></i></div>
+          <div class="faq-a">ZUPCO (Zimbabwe United Passenger Company) is the state-owned bus operator. Routes cover Harare, Bulawayo, and major towns.</div>
+        </div>
+      </div>
+      <div class="app-info">
+        <h3>App Information</h3>
+        <p><strong>App Name:</strong> RHS Transport</p>
+        <p><strong>Version:</strong> 1.0.0</p>
+        <p><strong>Owner:</strong> @ethantawana</p>
+        <p><strong>Country:</strong> Zimbabwe 🇿🇼</p>
+        <a href="https://play.google.com/store" target="_blank" class="store-btn"><i class="fab fa-google-play"></i> Available on Google Play</a>
+        <button onclick="showQR()" class="store-btn qr-store-btn"><i class="fas fa-qrcode"></i> Get App QR Code</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main-app -->
+
+<!-- ===== MODALS ===== -->
+
+<!-- Order Modal -->
+<div id="order-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3><i class="fas fa-search-location"></i> Finding Your Driver…</h3>
+      <button onclick="closeModal('order-modal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="finding-animation">
+      <div class="radar-ring r1"></div>
+      <div class="radar-ring r2"></div>
+      <div class="radar-ring r3"></div>
+      <div class="radar-center"><i class="fas fa-car"></i></div>
+    </div>
+    <p class="finding-text">Sending your request to nearby drivers…</p>
+    <div id="driver-found" class="driver-found hidden">
+      <div class="found-driver-card">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=driver1" alt="Driver" class="found-avatar"/>
+        <div class="found-info">
+          <strong id="found-driver-name">Tapiwa M.</strong>
+          <div class="star-rating">⭐⭐⭐⭐⭐ 4.9</div>
+          <small id="found-vehicle">Toyota Vitz • AAD 3421</small>
+        </div>
+        <div class="found-actions">
+          <button onclick="callDriver()" class="action-btn call"><i class="fas fa-phone"></i></button>
+          <button onclick="messageDriver()" class="action-btn msg"><i class="fas fa-comment"></i></button>
+        </div>
+      </div>
+      <div class="eta-bar">
+        <i class="fas fa-clock"></i>
+        <span>Driver arrives in <strong>4 min</strong></span>
+      </div>
+    </div>
+    <button class="btn-secondary cancel-btn" onclick="closeModal('order-modal')">Cancel</button>
+  </div>
+</div>
+
+<!-- Notification Modal -->
+<div id="notif-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3><i class="fas fa-bell"></i> Notifications</h3>
+      <button onclick="closeModal('notif-modal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="notif-list" class="notif-list">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- Message Driver Modal -->
+<div id="message-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3><i class="fas fa-comment"></i> Message Driver</h3>
+      <button onclick="closeModal('message-modal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chat-box" id="chat-box">
+      <div class="chat-msg driver">I'm on my way! I'll be there in 4 minutes.</div>
+      <div class="chat-msg me">Great, I'm at the main gate.</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chat-input" placeholder="Type a message…"/>
+      <button onclick="sendChatMsg()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- QR Modal -->
+<div id="qr-modal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3><i class="fas fa-qrcode"></i> App QR Code</h3>
+      <button onclick="closeModal('qr-modal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="qr-container">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://rhstransport.co.zw&color=1a7a3f" alt="QR Code" class="qr-img"/>
+      <p>Scan to download RHS Transport</p>
+      <p class="qr-url"><a href="https://rhstransport.co.zw" target="_blank">https://rhstransport.co.zw</a></p>
+      <a href="https://play.google.com/store" target="_blank" class="store-btn"><i class="fab fa-google-play"></i> Google Play Store</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
